@@ -21,6 +21,10 @@ const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1,
   },
+  container: {
+    flexGrow: 1,
+    marginBottom: theme.spacing(5),
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -165,7 +169,7 @@ export default function TDGAppBar() {
   );
 
   return (
-    <div className={classes.grow}>
+    <div className={classes.container}>
       <AppBar position="static">
         <Toolbar>
           <IconButton

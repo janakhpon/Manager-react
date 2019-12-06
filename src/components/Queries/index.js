@@ -12,7 +12,21 @@ export const GET_USERS = gql`
       title
       body
       public
+      completed
+      date
     }
+    date
+  }
+}
+`
+
+export const GET_TASKS = gql`
+{
+  tasks{
+    title
+    body
+    public
+    completed
     date
   }
 }
