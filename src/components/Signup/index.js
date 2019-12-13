@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useMutation } from '@apollo/react-hooks';
+import { CREATE_USER } from '../Queries';
 
 function Copyright() {
   return (
@@ -46,8 +48,43 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+
+const INITIAL_VALUES = {
+  name: "",
+  email: "",
+  phone: "",
+  password: ""
+}
+
+const Signup = () => {
+  const [values, setValues] = React.useState(INITIAL_VALUES)
+  const [createUser, {data}] = useMutation(CREATE_USER);
   const classes = useStyles();
+
+
+  const handleChange = (e) => {
+
+    e.persist();
+    setValues(previousValues => ({
+      ...previousValues, [e.target.name]: e.target.value
+    }))
+
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    let name = values.name
+    let email = values.email
+    let phone = values.phone
+    let password = values.password
+
+    createUser({ variables: {name, email, phone, password}})
+    this.props.history.push('/app-panel')
+
+  }
+
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -57,12 +94,25 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+         CREATE AN ACCOUNT
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
+            onChange={handleChange}
+            required
+            fullWidth
+            id="name"
+            label="Your name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            onChange={handleChange}
             required
             fullWidth
             id="email"
@@ -74,6 +124,19 @@ export default function SignUp() {
           <TextField
             variant="outlined"
             margin="normal"
+            onChange={handleChange}
+            required
+            fullWidth
+            id="phone"
+            label="Phone number"
+            name="phone"
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            onChange={handleChange}
             required
             fullWidth
             name="password"
@@ -91,19 +154,15 @@ export default function SignUp() {
             fullWidth
             variant="contained"
             color="primary"
+            onClick={handleSubmit}
             className={classes.submit}
           >
-            Sign In
+            SIGN UP
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
               <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {"Already have an account? Sign In"}
               </Link>
             </Grid>
           </Grid>
@@ -115,3 +174,5 @@ export default function SignUp() {
     </Container>
   );
 }
+
+export default Signup;

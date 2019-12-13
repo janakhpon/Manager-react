@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -46,8 +46,35 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+
+const INITIAL_VALUES = {
+  name: "",
+  email: "",
+  phone: "",
+  password: ""
+}
+
+const Signin = () => {
+  const [values, setValues] = React.useState(INITIAL_VALUES)
   const classes = useStyles();
+
+
+  const handleChange = (e) => {
+
+    e.persist();
+    setValues(previousValues => ({
+      ...previousValues, [e.target.name]: e.target.value
+    }))
+
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.table(values)
+
+  }
+
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -63,6 +90,19 @@ export default function SignIn() {
           <TextField
             variant="outlined"
             margin="normal"
+            onChange={handleChange}
+            required
+            fullWidth
+            id="name"
+            label="Your name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            onChange={handleChange}
             required
             fullWidth
             id="email"
@@ -74,6 +114,19 @@ export default function SignIn() {
           <TextField
             variant="outlined"
             margin="normal"
+            onChange={handleChange}
+            required
+            fullWidth
+            id="phone"
+            label="Phone number"
+            name="phone"
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            onChange={handleChange}
             required
             fullWidth
             name="password"
@@ -115,3 +168,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default Signin;

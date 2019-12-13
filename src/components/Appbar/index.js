@@ -201,8 +201,8 @@ export default function TDGAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Link to="/app-form"><EditOutlinedIcon /> </Link>
+            <IconButton color="inherit" to="/app-panel" renderAs={Link} >
+             <EditOutlinedIcon/>
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
