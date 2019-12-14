@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,10 +11,23 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import * as routes from '../../constants/routes'
+import SignOutButton from '../Signout'
+import { useQuery } from 'react-apollo'
+import { GET_ME } from '../Queries'
+
+const NavLink = styled(Link)`
+    text-decoration: none;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -83,7 +95,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function TDGAppBar() {
+export default function PageNav() {
+  const id = localStorage.getItem('id')
+  const { loading, error, data } = useQuery(GET_ME, {
+    variables: { id },
+  });
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -121,7 +138,16 @@ export default function TDGAppBar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="app-signin">Signin</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <NavLink to={routes.PANELS}>
+          PANELS
+      </NavLink>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <NavLink to={routes.SIGN_UP}>
+          Sign up
+        </NavLink>
+      </MenuItem>
     </Menu>
   );
 
@@ -143,8 +169,34 @@ export default function TDGAppBar() {
           </Badge>
         </IconButton>
         <Link to="/app-form">
-          New Task
-          </Link>
+          New PANELS          </Link>
+      </MenuItem>
+      <MenuItem>
+        <IconButton aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="secondary">
+            <EditOutlinedIcon />
+          </Badge>
+        </IconButton>
+        <Link to="/app-form">
+          New PANELS        </Link>
+      </MenuItem>
+      <MenuItem>
+        <IconButton aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="secondary">
+            <EditOutlinedIcon />
+          </Badge>
+        </IconButton>
+        <Link to="/app-form">
+          New PANELS      </Link>
+      </MenuItem>
+      <MenuItem>
+        <IconButton aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="secondary">
+            <EditOutlinedIcon />
+          </Badge>
+        </IconButton>
+        <Link to="/app-form">
+          New PANELS          </Link>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -168,6 +220,7 @@ export default function TDGAppBar() {
     </Menu>
   );
 
+
   return (
     <div className={classes.container}>
       <AppBar position="static">
@@ -178,14 +231,14 @@ export default function TDGAppBar() {
             color="inherit"
             aria-label="open drawer"
           >
-          <Link to="/">
-          <MenuIcon/>
-          </Link>
-            
+            <Link to="/">
+              <MenuIcon />
+            </Link>
+
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Material-UI
-          </Typography>
+    </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -202,7 +255,7 @@ export default function TDGAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton color="inherit" to="/app-panel" renderAs={Link} >
-             <EditOutlinedIcon/>
+              <EditOutlinedIcon />
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">

@@ -1,0 +1,9 @@
+export const LANDING = '/';
+export const TASKS = '/Page-tasks'
+export const PANELS = '/Page-panels'
+export const PROFILE = '/Page-profile'
+export const SIGN_UP = '/Page-signup';
+export const SIGN_IN = '/Page-signin';
+export const USERS = '/Page-users';
+export const HELP = '/Page-help'
+export const HOME= '/Page-home'

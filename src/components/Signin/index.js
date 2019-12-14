@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useMutation } from '@apollo/react-hooks';
+import { USER_LOGIN } from '../Queries';
 
 function Copyright() {
   return (
@@ -48,14 +50,13 @@ const useStyles = makeStyles(theme => ({
 
 
 const INITIAL_VALUES = {
-  name: "",
   email: "",
-  phone: "",
   password: ""
 }
 
-const Signin = () => {
+const PageSignin = () => {
   const [values, setValues] = React.useState(INITIAL_VALUES)
+  const [userLogin, { loading, error, data }] = useMutation(USER_LOGIN);
   const classes = useStyles();
 
 
@@ -70,7 +71,11 @@ const Signin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.table(values)
+
+    let email = values.email
+    let password = values.password
+
+    userLogin({ variables: { email, password } })
 
   }
 
@@ -78,27 +83,19 @@ const Signin = () => {
 
   return (
     <Container component="main" maxWidth="xs">
+    {data? (
+      localStorage.setItem('id', data.userLogin.user.id)
+      ):("")}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          CREATE AN ACCOUNT
         </Typography>
         <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            onChange={handleChange}
-            required
-            fullWidth
-            id="name"
-            label="Your name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-          />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -111,18 +108,7 @@ const Signin = () => {
             autoComplete="email"
             autoFocus
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            onChange={handleChange}
-            required
-            fullWidth
-            id="phone"
-            label="Phone number"
-            name="phone"
-            autoComplete="name"
-            autoFocus
-          />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -144,19 +130,15 @@ const Signin = () => {
             fullWidth
             variant="contained"
             color="primary"
+            onClick={handleSubmit}
             className={classes.submit}
           >
-            Sign In
+            SIGN IN
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
               <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {"Already have an account? Sign In"}
               </Link>
             </Grid>
           </Grid>
@@ -169,4 +151,4 @@ const Signin = () => {
   );
 }
 
-export default Signin;
+export default PageSignin;

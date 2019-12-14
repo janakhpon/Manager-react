@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import App from './App';
 import theme from './theme';
 
-const localGraphQL = "http://localhost:4000";
+const localGraphQL = "https://todographqlbynovae.herokuapp.com";
 
 const client = new ApolloClient({
   uri: localGraphQL

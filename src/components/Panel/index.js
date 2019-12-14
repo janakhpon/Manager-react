@@ -61,7 +61,7 @@ const INITIAL_STATE = {
 }
 
 
-export default function TDGpanelPage(props) {
+export default function PagePanel(props) {
   const { handleSubmit, handleChange, values } = useFormValidation(
     INITIAL_STATE
   );
