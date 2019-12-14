@@ -15,17 +15,12 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select'
+import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { useQuery } from '@apollo/react-hooks';
-import { GET_TASKS } from "../Queries";
+import { useMutation } from '@apollo/react-hooks';
+import { UPDATE_TASK } from "../Queries";
 import moment from 'moment'
 import PDGloadingPage from '../Loading';
 import PDGerrorPage from '../Error';
@@ -51,35 +46,52 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const INITIAL_STATE = {
-    id: "",
-    title: "",
-    body: "",
-    completed: "",
-    visibility: "",
-    date: ""
-}
+
+
 
 
 export default function PageTask({ task }) {
-    const { handleSubmit, handleChange, values } = useFormValidation(
-        INITIAL_STATE
-    );
-    const [open, setOpen] = React.useState(false);
-    const [age, setAge] = React.useState('');
-    const [id, setId] = React.useState('');
-    const [title, setTitle] = React.useState('')
-    const [body, setBody] = React.useState('')
-    const [completed, setCompleted] = React.useState(null)
-    const [avisibility, setAvisibility] = React.useState(null)
-    const [date, setDate] = React.useState('')
-    const inputLabel = React.useRef(null);
-    const [labelWidth, setLabelWidth] = React.useState(0);
+    const { id, title, body, completed, visibility, date } = task
+    const [updateTask, { loading, error, data }] = useMutation(UPDATE_TASK);
 
+    console.log(id)
+    const INITIAL_STATE = {
+        id: id,
+        title: title,
+        body: body,
+        completed: completed,
+        visibility: visibility,
+        date: date
+    }
+    const [values, setValues] = React.useState(INITIAL_STATE)
+    const [open, setOpen] = React.useState(false)
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
+    const handleChange = (e) => {
+
+        e.persist();
+        setValues(previousValues => ({
+            ...previousValues, [e.target.name]: e.target.value
+        }))
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        let id = task.id
+        let author = localStorage.getItem('id')
+        let title = values.title
+        let body = values.body
+        let completed = new Boolean(values.completed)
+        let visibility = new Boolean(values.visibility)
+
+        updateTask({ variables: { id, title, body, completed, visibility, author } })
+
+        setOpen(false);
+
+    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -88,14 +100,6 @@ export default function PageTask({ task }) {
     const handleClose = () => {
         setOpen(false);
     };
-
-
-
-    const getAllTasks = useQuery(GET_TASKS);
-    if (getAllTasks.loading) return <PDGloadingPage />;
-    if (getAllTasks.error) return <PDGerrorPage />;
-    let data = getAllTasks.data;
-    let a, b, c, d, e, f, g = "";
 
 
     return (
@@ -144,18 +148,73 @@ export default function PageTask({ task }) {
                 >
                     <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            Let Google help apps determine location. This means sending anonymous location data to
-                            Google, even when no apps are running.
-                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="id"
+                            name="id"
+                            label="Task ID"
+                            type="text"
+                            onChange={handleChange}
+                            value={values.id}
+                            fullWidth
+                        />
+
+                        <TextField
+                            onChange={handleChange}
+                            value={values.title}
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            name="title"
+                            label="Task Title"
+                            type="text"
+                            fullWidth
+                        />
+
+                        <TextField
+                            autoFocus
+                            onChange={handleChange}
+                            value={values.body}
+                            margin="dense"
+                            id="body"
+                            name="body"
+                            label="Task Description"
+                            type="text"
+                            fullWidth
+                        />
+
+                        <TextField
+                            onChange={handleChange}
+                            value={values.completed}
+                            autoFocus
+                            margin="dense"
+                            id="completed"
+                            name="completed"
+                            label="Completed: true/false"
+                            type="text"
+                            fullWidth
+                        />
+
+                        <TextField
+                            onChange={handleChange}
+                            value={values.visibility}
+                            autoFocus
+                            margin="dense"
+                            id="visibility"
+                            name="visibility"
+                            label="visibility: true/false"
+                            type="text"
+                            fullWidth
+                        />
                     </DialogContent>
                     <DialogActions>
-                        <Button autoFocus onClick={handleClose} color="primary">
-                            Disagree
-          </Button>
+                        <Button autoFocus onClick={handleSubmit} color="primary">
+                            SAVE
+                        </Button>
                         <Button onClick={handleClose} color="primary" autoFocus>
-                            Agree
-          </Button>
+                            CANCEL
+                        </Button>
                     </DialogActions>
                 </Dialog>
                 <Button
