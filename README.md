@@ -1,72 +1,80 @@
-# Gallery
-  Gallery is a fully fledged wallpaper website built with NodeJs and MongoDB. Gallery provide RESTful API services to frontend applications and can also be used as server-side application as it has its own templating and UI. Please Check the `RELEASE_STATUS` before you clone. Here is a deployed link [herokudeploy](https://ei-sgallery.herokuapp.com/)
+# Gallery-React
+  Ei'sGallery is a wallpaper website built on MERN stack. You can upload wallpaper with specific descption including tags, types, device, rating and choice and all of these features can also be added dynamically. On displaying the wallpapaers you can sort by type, tags, date, rating and choice. Notice that CRUD options are available to admin only. Please Check the `RELEASE_STATUS` before you clone. Here is a deployed link [herokudeploy](https://ei-sgallery.herokuapp.com/)
 
-## API collections
-1. USER API
-2. TYPE API
-3. TAG API
-4. PROFILE API
-5. GALARIE API
-6. DEVICE API
 
-## USER_API
-  `USER API` is for signup,login,auth operation and has a ref linking to `PROFILE_API` with JWT. CRUD operations are available.
 
-## TYPE_API
-  `TYPE API` is for adding, editing type value for Wallapers. CRUD operations are available.
-  
- ## TAG_API
-  `TAG API` is for adding, editing tag values for Wallapers. CRUD operations are available.
-  
- ## PROFILE_API
-  `PROFILE API` is for adding user information as profile and has a ref linking to `USER_API` with JWT. CRUD operations are available.
-  
- ## GALARIE_API
-  `GALARIE API` is for uploading wallpapers and selecting features from other api. CRUD operations are available.
+# Usage
+clone the server repository first
+    git clone https://github.com/janakhpon/GalleryOld.git
 
-## DEVICE_API
-  `DEVICE API` is for adding devices,editing device to use in `GALARIE_API`. CRUD operations are available.
-  
+clone the client repository
+    git clone https://github.com/janakhpon/Gallery-React.git
+
+Get into server directory root folder
+    cd GalleryOld
+
+Install Dependencies using [npm](https://www.npmjs.com/)
+
+    npm install
+    npm i -d
+    npm run start
+    npm run dev
+
+Install Dependencies using [yarn](https://yarnpkg.com/en/)
+
+    yarn install
+    yarn add
+    yarn start
+    yarn dev
+
+then for client,
+
+Get into client directory root folder
+    cd Gallery-React
+
+Install Dependencies using [npm](https://www.npmjs.com/)
+
+    npm install
+    npm i -d
+    npm run start
+    npm run dev
+
+Install Dependencies using [yarn](https://yarnpkg.com/en/)
+
+    yarn install
+    yarn add
+    yarn start
+    yarn dev
+
+
+
+# FULL RESOURCES
+ [BACKEND/SERVER](https://ei-sgallery.herokuapp.com/)
+ [FRONTEND/CLIENT](https://ei-sgallery.herokuapp.com/)
+ [FRONTEND/CLIENT](https://ei-sgallery.herokuapp.com/)
+ [FRONTEND/CLIENT](https://ei-sgallery.herokuapp.com/)
+
+
+## Included Features
+ 1.add(wallpaper/type/tags/device)
+ 2.get(wallpaper/type/tags/device)
+ 3.update(wallpaper/type/tags/device)
+ 4.delete(wallpaper/type/tags/device)
+ 5.sort(type/date/tag/rate/choice)
+
+
+## Features that is not included yet
+ 1. Progress options(based on fs)
+ 2. Graphql for contact page
+ 3. Websocket for multi languages
+ 4. Sort by Devices
+
 
 ## RELEASE_STATUS:IN PROGRESS
-## RELEASE_CODE: GDEV013
- Sorry this project is not completely done yet and most features are available for developement service. If you are considering about cloning this project please wait till it's completed.
+## RELEASE_CODE: GDEV039
+ Sorry this project is not completely done yet and only a few features are available. If you are considering about cloning this project please wait till it's completed.
 
-## API OPTIONS
-Use the following routes for making requests.
+## Description
+ If you wanna try it on your own clone the `SERVER-SIDE-REPOSITORY` firs then use your own `MONGO_URI` then run `start` or `dev` whatever u like and if it went without errors clone this `CLIENT-SIDE` repo and start the application. I'm sure there will be a few or more errors as this project is completely done for both `CLIENT` and `SERVER`.
     
-```bash
-   GET => {
-       deviceapi/list
-       galarieapi/list
-       profileapi/list
-       tagapi/list
-       typeapi/list
-       userapi/list
-   }
-
-    GET => {
-       deviceapi/lists
-       galarieapi/lists
-       profileapi/lists
-       tagapi/lists
-       typeapi/lists
-       userapi/lists
-   }
-
-
-   {
-       ...
-   }
-   
-   DELTE => {
-        deviceapi/delete
-       galarieapi/delete
-       profileapi/delete
-       tagapi/delete
-       typeapi/delete
-       userapi/delete
-   }
-```
-
 

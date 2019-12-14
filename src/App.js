@@ -1,44 +1,141 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import TDGAppBar from './components/Appbar';
-import TDGListPage from './components/List';
-import TDGpanelPage from './components/Panel';
-import TDGFormPage from './components/Form';
-import TDGEditformPage from './components/Editform'
-import TDGitemPage from './components/ListItem'
-import TDGerrorPage from './components/Error'
-import TestME from './components/test';
-import TestHer from './components/testtwo';
-import Signin from './components/Signin';
-import Signup from './components/Signup';
-import history from './components/History';
-import Layout from './components/Layout';
+import Card from '@material-ui/core/Card';
+import styled from 'styled-components'
+import PageSignup from './components/Signup'
+import PageSignin from './components/Signin'
+import PageLanding from './components/Landing'
+import PageHome from './components/Home'
+import PageHelp from './components/Help'
+import PageProfile from './components/Profile'
+import PageTasks from './components/Tasks'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import * as routes from './constants/routes'
+import history from './constants/history'
+import PageNav from './components/Navbar';
+import PageUsers from './components/Users';
 
 
 
 export default function App() {
+
+  const DContainer = styled.div`
+  background: #CAD3C8;
+  color:white;
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  border-radius: 0.1rem;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center
+
+
+  @media all and (max-width: 800px) {
+    overflow:hidden;
+    background: #CAD3C8;
+    color:white;
+    margin: 1rem;
+    padding: 1rem;
+    height: 60rem;
+    display: flex;
+    border-radius: 0.8rem;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center
+  }
+
+  @media all and (max-width: 500px) {
+    overflow:hidden;
+    background: #CAD3C8;
+    color:white;
+    margin: 0.4rem;
+    padding: 0.4rem;
+    height: 40rem;
+    display: flex;
+    border-radius: 0.8rem;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center
+  }
+
+`
+
+  const DCard = styled.div`
+  border-radius:0.2rem;
+  flex: 1 1 100%;
+  align-self: center;
+
+  @media all and (max-width: 800px){
+    border-radius:0.2rem;
+    flex: 1 1 auto;
+    align-self: center;
+  }
+
+  @media all and (max-width: 500px){
+    border-radius:0.2rem;
+    flex: 1 1 auto;
+    align-self: center;
+  }
+`
+
+
   return (
     <>
-    <Router history={history}>
-        <Layout>
-          <Switch>
-          <Container maxWidth="md">
-          <Route exact path="/" component={TDGListPage} />
-          <Route exact path="/app-form" component={TDGFormPage} />
-          <Route exact path="/app-list-item" component={TDGitemPage} />
-          <Route exact path="/app-edit" component={TDGEditformPage} />
-          <Route exact path="/app-test" component={TestME} />
-          <Route exact path="/app-two" component={TestHer} />
-          <Route exact path="/app-signin" component={Signin} />
-          <Route exact path="/app-signup" component={Signup} />
-          <Route exact path="/app-panel" component={TDGpanelPage} />
-          <Route exact path="/app-error" component={TDGerrorPage} />
-          </Container>
-          </Switch>
-        </Layout>
-    </Router>
+      <Router history={history}>
+        <PageNav />
+        <Container maxWidth="md">
+            <DContainer>
+              <DCard>
+                <Route
+                  exact
+                  path={routes.LANDING}
+                  component={() => <PageLanding />}
+                />
+                <Route
+                  exact
+                  path={routes.SIGN_UP}
+                  component={() => <PageSignup />}
+                />
+                <Route
+                  exact
+                  path={routes.SIGN_IN}
+                  component={() => <PageSignin />}
+                />
+                <Route
+                  exact
+                  path={routes.PROFILE}
+                  component={() => <PageProfile />}
+                />
+                <Route
+                  exact
+                  path={routes.HOME}
+                  component={() => <PageHome />}
+                />
+                <Route
+                  exact
+                  path={routes.TASKS}
+                  component={() => <PageTasks />}
+                />
+                <Route
+                  exact
+                  path={routes.USERS}
+                  component={() => <PageUsers />}
+                />
+                <Route
+                  exact
+                  path={routes.HELP}
+                  component={() => <PageHelp />}
+                />
+              </DCard>
+            </DContainer>
+        </Container>
+      </Router>
+
     </>
-    
+
   );
 }

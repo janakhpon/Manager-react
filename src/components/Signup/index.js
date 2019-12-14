@@ -56,9 +56,9 @@ const INITIAL_VALUES = {
   password: ""
 }
 
-const Signup = () => {
+const PageSignup = () => {
   const [values, setValues] = React.useState(INITIAL_VALUES)
-  const [createUser, {data}] = useMutation(CREATE_USER);
+  const [createUser, {loading, error, data}] = useMutation(CREATE_USER);
   const classes = useStyles();
 
 
@@ -80,7 +80,6 @@ const Signup = () => {
     let password = values.password
 
     createUser({ variables: {name, email, phone, password}})
-    this.props.history.push('/app-panel')
 
   }
 
@@ -175,4 +174,4 @@ const Signup = () => {
   );
 }
 
-export default Signup;
+export default PageSignup;
