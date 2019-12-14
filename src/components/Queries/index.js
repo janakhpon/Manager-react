@@ -77,8 +77,33 @@ mutation User($email: String!, $password: String!){
     }
   } 
 }
-
 `
+
+export const UPDATE_USER = gql`
+mutation User($id: ID!, $name: String!, $email: String!, $phone: String!, $password: String!){
+  updateUser(data: {
+    id: $id,
+    name: $name,
+    email: $email,
+    phone: $phone,
+    password: $password
+  }){
+    id
+    name
+    email
+    phone
+    password
+    tasks{
+      id
+      title
+      body
+    }
+    date
+  }
+}
+`
+
+
 export const CREATE_TASK = gql`
  mutation Task($title: String!, $body: String!, $visibility: Boolean!, $author: ID!){
     createTask(title: $title, body: $body, visibility: $visibility, author: $author){
@@ -86,5 +111,28 @@ export const CREATE_TASK = gql`
       date
     }
   }
+`
 
+export const UPDATE_TASK = gql`
+  mutation Task($id: ID!, $title: String!, $body: String!, $completed: Boolean!, $visibility: Boolean!, $author: ID!){
+    updateTask(data: {
+      id: $id,
+      title: $title,
+      body: $body,
+      completed: $completed,
+      visibility: $visibility,
+      author: $author
+    }){
+      id
+      title
+      body
+      completed
+      visibility
+      author{
+        name
+        id
+      }
+      date
+    }
+  }
 `
