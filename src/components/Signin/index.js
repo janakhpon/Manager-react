@@ -81,11 +81,12 @@ const PageSignin = () => {
     
     try{
      const logg = await userLogin({ variables: { email, password } })
-     localStorage.setItem('id', data.userLogin.user.id)
-     localStorage.setItem('name', data.userLogin.user.name)
-     localStorage.setItem('num', data.userLogin.user.tasks.length)
+     localStorage.setItem('id', logg.data.userLogin.user.id)
+     localStorage.setItem('name', logg.data.userLogin.user.name)
+     localStorage.setItem('num', logg.data.userLogin.user.tasks.length)
+     console.log(logg)
  
-     history.push('/Page-tasks')
+     history.push('/Page-private-tasks')
     }catch(err){
 
 

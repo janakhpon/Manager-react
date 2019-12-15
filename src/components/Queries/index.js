@@ -32,6 +32,44 @@ query User($id : String!){
 }
 `
 
+export const GET_RPIVATE_TASKS = gql`
+query User($id: String!){
+  users(query: $id){
+    name
+    id
+    email
+    phone
+    tasks{
+      id
+      title
+      body
+      completed
+      visibility
+      date
+    }
+  }
+}
+`
+
+export const GET_PUBLIC_TASKS = gql`
+{
+  publicTasks{
+    id
+    title
+    visibility
+    completed
+    body
+    date
+    author{
+      id
+      phone
+      name
+      email
+    }
+  }
+}
+`
+
 export const GET_TASKS = gql`
 {
   tasks{
@@ -44,6 +82,7 @@ export const GET_TASKS = gql`
   }
 }
 `
+
 export const CREATE_USER = gql`
 mutation User($name: String!, $email: String!, $phone: String!, $password: String!){
   createUser(data: {
