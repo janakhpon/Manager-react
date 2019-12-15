@@ -15,7 +15,8 @@ import PageAdmin from '../Admin'
 import PageNav from '../Navbar'
 import PageError from '../Error'
 import PageLoading from '../Loading'
-
+import { useQuery } from 'react-apollo'
+import { GET_ME } from '../Queries'
 
 const DContainer = styled.div`
 overflow: hidden;
@@ -81,14 +82,10 @@ align-self: center;
 `
 const Layout = () => {
     const id = localStorage.getItem('id')
-    const name = localStorage.getItem('name')
-    const numoftask = localStorage.getItem('num')
-
-    const me = {
-        id,
-        name,
-        numoftask
-    }
+    const user = useQuery(GET_ME, {
+      variables: { id },
+    });
+    console.log(user.data.users[0].id)
 
     let location = useLocation()
 
@@ -96,7 +93,7 @@ const Layout = () => {
         <>
             {location.pathname !== '/Page-signup'
                 && location.pathname !== '/Page-signin'
-                && <PageNav session={me}/>
+                && <PageNav session={user}/>
             }
             <Container maxWidth="md">
                 <DContainer>

@@ -64,10 +64,29 @@ export default function PageTask({ task }) {
         date: date
     }
     const [values, setValues] = React.useState(INITIAL_STATE)
+    const [checked, setChecked] = React.useState(completed);
     const [open, setOpen] = React.useState(false)
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const setCheckorNot = (val) => {
+        let id = task.id
+        let author = localStorage.getItem('id')
+        let title = task.title
+        let body = task.body
+        let completed = new Boolean(val)
+        let visibility = new Boolean(task.visibility)
+        updateTask({ variables: { id, title, body, completed, visibility, author } })
+        setChecked(completed)
+    }
+
+    const handleCheckChange = () => {
+        
+        //event.target.checked? (setCheckorNot(false), anotherFun()) : setCheckorNot(true)
+        checked ? setCheckorNot(false) : setCheckorNot(true)
+
+    };
 
     const handleChange = (e) => {
 
@@ -114,7 +133,7 @@ export default function PageTask({ task }) {
                     aria-label="Acknowledge"
                     onClick={event => event.stopPropagation()}
                     onFocus={event => event.stopPropagation()}
-                    control={<Checkbox checked={task.completed}
+                    control={<Checkbox checked={checked} onClick={handleCheckChange}
                     />}
                     label={task.title}
                 />

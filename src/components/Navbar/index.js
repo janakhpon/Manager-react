@@ -14,8 +14,19 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import LockIcon from '@material-ui/icons/Lock';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import { useMutation } from '@apollo/react-hooks';
+import { CREATE_TASK } from "../Queries";
+import { Link, useHistory } from 'react-router-dom'
 import * as routes from '../../constants/routes'
 import SignOutButton from '../Signout'
 import { useQuery } from 'react-apollo'
@@ -23,6 +34,7 @@ import { GET_ME } from '../Queries'
 
 const NavLink = styled(Link)`
     text-decoration: none;
+    text-align: center;
 
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
@@ -73,6 +85,12 @@ const useStyles = makeStyles(theme => ({
   inputRoot: {
     color: 'inherit',
   },
+  button: {
+    margin: theme.spacing(1),
+  },
+  menuItem: {
+    textAlign: 'center',
+  },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
     transition: theme.transitions.create('width'),
@@ -95,12 +113,20 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PageNav() {
-  const id = localStorage.getItem('id')
-  const { loading, error, data } = useQuery(GET_ME, {
-    variables: { id },
-  });
 
+const INITIAL_STATE = {
+  title: "",
+  body: "",
+  visibility: "",
+  author: ""
+}
+
+
+const PageNav = ({ session }) => {
+  const history = useHistory()
+  const [createTask] = useMutation(CREATE_TASK);
+  const [values, setValues] = React.useState(INITIAL_STATE)
+  const [open, setOpen] = React.useState(false)
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -125,6 +151,45 @@ export default function PageNav() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const handleChange = (e) => {
+
+    e.persist();
+    setValues(previousValues => ({
+      ...previousValues, [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let author = localStorage.getItem('id')
+    let title = values.title
+    let body = values.body
+    let visibility = new Boolean(values.visibility)
+
+    createTask({ variables: { title, body, visibility, author } })
+
+    setOpen(false);
+
+  }
+
+  const lockMeOut = (e) => {
+    localStorage.setItem('id', null)
+    localStorage.setItem('name', null)
+    localStorage.setItem('num', null)
+    history.push('/Page-signin')
+
+  }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -136,17 +201,63 @@ export default function PageNav() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleMenuClose}>
-        <NavLink to={routes.PANELS}>
-          PANELS
+        <NavLink to={routes.LANDING}>
+          HOME
+      </NavLink>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>        <NavLink to={routes.SIGN_UP}>
+        SIGN UP
+  </NavLink></MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <NavLink to={routes.SIGN_IN}>
+          SIGN IN
       </NavLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-        <NavLink to={routes.SIGN_UP}>
-          Sign up
+        <NavLink to={routes.HELP}>
+          HELP
         </NavLink>
+      </MenuItem>
+    </Menu>
+  );
+
+  const renderMenuAuthed = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem className={classes.menuItem} onClick={handleMenuClose}>{session.name}</MenuItem>
+      <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
+        <NavLink to={routes.TASKS}>
+          Tasks
+      </NavLink>
+      </MenuItem>
+      <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
+        <NavLink to={routes.USERS}>
+          Users
+      </NavLink>
+      </MenuItem>
+      <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
+        <NavLink to={routes.HELP}>
+          HELP
+    </NavLink>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Button
+          color="secondary"
+          size="small"
+          className={classes.button}
+          startIcon={<LockIcon />}
+          onClick={lockMeOut}
+        >
+          Signout
+    </Button>
       </MenuItem>
     </Menu>
   );
@@ -169,7 +280,7 @@ export default function PageNav() {
           </Badge>
         </IconButton>
         <Link to="/app-form">
-          New PANELS          </Link>
+          NewTASKS          </Link>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
@@ -178,7 +289,7 @@ export default function PageNav() {
           </Badge>
         </IconButton>
         <Link to="/app-form">
-          New PANELS        </Link>
+          NewTASKS        </Link>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
@@ -187,7 +298,7 @@ export default function PageNav() {
           </Badge>
         </IconButton>
         <Link to="/app-form">
-          New PANELS      </Link>
+          NewTASKS      </Link>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
@@ -196,7 +307,7 @@ export default function PageNav() {
           </Badge>
         </IconButton>
         <Link to="/app-form">
-          New PANELS          </Link>
+          NewTASKS          </Link>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -237,7 +348,7 @@ export default function PageNav() {
 
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            Manager
     </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -254,24 +365,43 @@ export default function PageNav() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit" to="/app-panel" renderAs={Link} >
-              <EditOutlinedIcon />
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {session ? (
+              <>
+                <IconButton color="inherit">
+                  <EditOutlinedIcon onClick={handleClickOpen} />
+                </IconButton>
+                <IconButton aria-label="show 17 new notifications" color="inherit">
+                  <Badge badgeContent={parseInt(session.numoftask)} color="secondary">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </>
+            ) : (
+                <>
+                  <IconButton
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+
+                </>
+              )
+            }
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -286,8 +416,67 @@ export default function PageNav() {
           </div>
         </Toolbar>
       </AppBar>
+
       {renderMobileMenu}
-      {renderMenu}
+      {session ? renderMenuAuthed : renderMenu}
+
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogContent>
+
+          <TextField
+            onChange={handleChange}
+            value={values.title}
+            autoFocus
+            margin="dense"
+            id="name"
+            name="title"
+            label="Task Title"
+            type="text"
+            fullWidth
+          />
+
+          <TextField
+            autoFocus
+            onChange={handleChange}
+            value={values.body}
+            margin="dense"
+            id="body"
+            name="body"
+            label="Task Description"
+            type="text"
+            fullWidth
+          />
+
+
+          <TextField
+            onChange={handleChange}
+            value={values.visibility}
+            autoFocus
+            margin="dense"
+            id="visibility"
+            name="visibility"
+            label="visibility: true/false"
+            type="text"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleSubmit} color="primary">
+            SAVE
+          </Button>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            CANCEL
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
+
+export default PageNav
