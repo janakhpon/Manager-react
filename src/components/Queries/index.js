@@ -21,7 +21,7 @@ export const GET_USERS = gql`
 `
 
 export const GET_ME = gql`
-query User($id : ID!){
+query User($id : String!){
     users(query: $id){
     id
     name
@@ -74,6 +74,9 @@ mutation User($email: String!, $password: String!){
       email
       phone
       password
+      tasks{
+        title
+      }
     }
   } 
 }
@@ -102,14 +105,25 @@ mutation User($id: ID!, $name: String!, $email: String!, $phone: String!, $passw
   }
 }
 `
-
-
 export const CREATE_TASK = gql`
  mutation Task($title: String!, $body: String!, $visibility: Boolean!, $author: ID!){
-    createTask(title: $title, body: $body, visibility: $visibility, author: $author){
+    createTask(data:{
+      title: $title,
+      body: $body,
+      visibility: $visibility,
+      author: $author
+    }){
       id
+      title
+      body
+      visibility
+      completed
+      author{
+          name
+          date
+        }
       date
-    }
+      }
   }
 `
 

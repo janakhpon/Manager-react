@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks';
 import { USER_LOGIN } from '../Queries';
 
@@ -55,6 +56,7 @@ const INITIAL_VALUES = {
 }
 
 const PageSignin = () => {
+  const history = useHistory()
   const [values, setValues] = React.useState(INITIAL_VALUES)
   const [userLogin, { loading, error, data }] = useMutation(USER_LOGIN);
   const classes = useStyles();
@@ -69,23 +71,33 @@ const PageSignin = () => {
 
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     let email = values.email
     let password = values.password
 
-    userLogin({ variables: { email, password } })
+    
+    
+    try{
+     const logg = await userLogin({ variables: { email, password } })
+     localStorage.setItem('id', data.userLogin.user.id)
+     localStorage.setItem('name', data.userLogin.user.name)
+     localStorage.setItem('num', data.userLogin.user.tasks.length)
+ 
+     history.push('/Page-tasks')
+    }catch(err){
 
+
+    }
+
+      
   }
 
 
 
   return (
     <Container component="main" maxWidth="xs">
-    {data? (
-      localStorage.setItem('id', data.userLogin.user.id)
-      ):("")}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

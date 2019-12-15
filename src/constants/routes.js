@@ -1,9 +1,19 @@
-export const LANDING = '/';
+//Defaults
+export const LANDING = '/'
+export const SIGN_UP = '/Page-signup'
+export const SIGN_IN = '/Page-signin'
+export const ERROR = '/Page-error'
+export const LOADING = '/Page-loading'
+
+
+//Authed
 export const TASKS = '/Page-tasks'
-export const PANELS = '/Page-panels'
+export const USERS = '/Page-users'
 export const PROFILE = '/Page-profile'
-export const SIGN_UP = '/Page-signup';
-export const SIGN_IN = '/Page-signin';
-export const USERS = '/Page-users';
+export const ME = '/Page-me'
 export const HELP = '/Page-help'
-export const HOME= '/Page-home'
+
+
+//Hidden .. Dev mode
+export const ADMIN = '/Page-admin'
+

@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PDGloadingPage() {
+export default function PageLoading() {
   const classes = useStyles();
 
   return <div className={classes.root}><h1>{" Loading ...... .... ... .."}</h1></div>;

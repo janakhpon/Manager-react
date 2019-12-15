@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PDGerrorPage() {
+export default function PageError() {
   const classes = useStyles();
 
   return <div className={classes.root}><h1>{" 404/503 | Sorry!"}</h1></div>;
