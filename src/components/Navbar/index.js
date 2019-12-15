@@ -235,17 +235,22 @@ const PageNav = ({ session }) => {
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>{session.name}</MenuItem>
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
         <NavLink to={routes.TASKS}>
-          Tasks
+         Private Tasks
       </NavLink>
       </MenuItem>
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
+      <NavLink to={routes.PUBLICTASKS}>
+        Public Tasks
+    </NavLink>
+    </MenuItem>
+      <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
         <NavLink to={routes.USERS}>
-          Users
+          List Users
       </NavLink>
       </MenuItem>
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
         <NavLink to={routes.HELP}>
-          HELP
+          HELP ME
     </NavLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>

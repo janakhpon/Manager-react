@@ -19,13 +19,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { useMutation } from '@apollo/react-hooks';
-import { UPDATE_TASK } from "../Queries";
 import moment from 'moment'
-import PDGloadingPage from '../Loading';
-import PDGerrorPage from '../Error';
 import ImageAvator from '../Avator'
-import useFormValidation from './val'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -50,67 +45,14 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export default function PageTask({ task }) {
+export default function PagePublicTask({ task }) {
     const { id, title, body, completed, visibility, date } = task
-    const [updateTask, { loading, error, data }] = useMutation(UPDATE_TASK);
-
-    console.log(id)
-    const INITIAL_STATE = {
-        id: id,
-        title: title,
-        body: body,
-        completed: completed,
-        visibility: visibility,
-        date: date
-    }
-    const [values, setValues] = React.useState(INITIAL_STATE)
-    const [checked, setChecked] = React.useState(completed);
     const [open, setOpen] = React.useState(false)
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const setCheckorNot = (val) => {
-        let id = task.id
-        let author = localStorage.getItem('id')
-        let title = task.title
-        let body = task.body
-        let completed = new Boolean(val)
-        let visibility = new Boolean(task.visibility)
-        updateTask({ variables: { id, title, body, completed, visibility, author } })
-        setChecked(completed)
-    }
 
-    const handleCheckChange = () => {
-        
-        //event.target.checked? (setCheckorNot(false), anotherFun()) : setCheckorNot(true)
-        checked ? setCheckorNot(false) : setCheckorNot(true)
-
-    };
-
-    const handleChange = (e) => {
-
-        e.persist();
-        setValues(previousValues => ({
-            ...previousValues, [e.target.name]: e.target.value
-        }))
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        let id = task.id
-        let author = localStorage.getItem('id')
-        let title = values.title
-        let body = values.body
-        let completed = new Boolean(values.completed)
-        let visibility = new Boolean(values.visibility)
-
-        updateTask({ variables: { id, title, body, completed, visibility, author } })
-
-        setOpen(false);
-
-    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -133,7 +75,7 @@ export default function PageTask({ task }) {
                     aria-label="Acknowledge"
                     onClick={event => event.stopPropagation()}
                     onFocus={event => event.stopPropagation()}
-                    control={<Checkbox checked={checked} onClick={handleCheckChange}
+                    control={<Checkbox checked={task.completed}
                     />}
                     label={task.title}
                 />
@@ -174,14 +116,12 @@ export default function PageTask({ task }) {
                             name="id"
                             label="Task ID"
                             type="text"
-                            onChange={handleChange}
-                            value={values.id}
+                            value={task.id}
                             fullWidth
                         />
 
                         <TextField
-                            onChange={handleChange}
-                            value={values.title}
+                            value={task.title}
                             autoFocus
                             margin="dense"
                             id="name"
@@ -193,8 +133,7 @@ export default function PageTask({ task }) {
 
                         <TextField
                             autoFocus
-                            onChange={handleChange}
-                            value={values.body}
+                            value={task.body}
                             margin="dense"
                             id="body"
                             name="body"
@@ -204,8 +143,7 @@ export default function PageTask({ task }) {
                         />
 
                         <TextField
-                            onChange={handleChange}
-                            value={values.completed}
+                            value={task.completed}
                             autoFocus
                             margin="dense"
                             id="completed"
@@ -216,8 +154,7 @@ export default function PageTask({ task }) {
                         />
 
                         <TextField
-                            onChange={handleChange}
-                            value={values.visibility}
+                            value={task.visibility}
                             autoFocus
                             margin="dense"
                             id="visibility"
@@ -228,9 +165,6 @@ export default function PageTask({ task }) {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button autoFocus onClick={handleSubmit} color="primary">
-                            SAVE
-                        </Button>
                         <Button onClick={handleClose} color="primary" autoFocus>
                             CANCEL
                         </Button>
@@ -245,7 +179,7 @@ export default function PageTask({ task }) {
                     onClick={handleClickOpen}
                 >
 
-                    Update
+                    View
                 </Button>
                 <Button
                     variant="contained"

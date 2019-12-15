@@ -8,7 +8,8 @@ import PageSignin from '../Signin'
 import PageLanding from '../Landing'
 import PageHelp from '../Help'
 import PageProfile from '../Profile'
-import PageTasks from '../Tasks'
+import PagePrivateTasks from '../Private'
+import PagePublicTasks from '../Public'
 import PageUsers from '../Users'
 import PageMe from '../Me'
 import PageAdmin from '../Admin'
@@ -96,7 +97,7 @@ const Layout = () => {
         <>
             {location.pathname !== '/Page-signup'
                 && location.pathname !== '/Page-signin'
-                && <PageNav session={me}/>
+                && <PageNav session={me} />
             }
             <Container maxWidth="md">
                 <DContainer>
@@ -128,8 +129,13 @@ const Layout = () => {
                         />
                         <Route
                             exact
-                            path={routes.TASKS}
-                            component={() => <PageTasks />}
+                            path={routes.PRIVATETASKS}
+                            component={() => <PagePrivateTasks />}
+                        />
+                        <Route
+                            exact
+                            path={routes.PUBLICTASKS}
+                            component={() => <PagePublicTasks />}
                         />
                         <Route
                             exact
