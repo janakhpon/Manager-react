@@ -148,7 +148,7 @@ export default function PagePrivateTask({ task }) {
                         {task.completed ? (<h6>completed: YES</h6>) : (<h6>completed: NO</h6>)}
                     </Typography>
                     <Typography component="p">
-                        {task.visibility ? (<h6>Available to Public</h6>) : (<h6>Not available to Public</h6>)}
+                        {(task.visibility.toString() === 'true') ? (<h6>Available to Public</h6>) : (<h6>Not available to Public</h6>)}
                     </Typography>
                     <Typography variant="p" component="p">
                         {moment(task.date, 'x').fromNow()}

@@ -35,7 +35,7 @@ function generate(element) {
   );
 }
 
-function TDGListPage() {
+function PageUsers() {
 
   const classes = useStyles();
   const [dense, setDense] = React.useState(false);
@@ -113,4 +113,4 @@ function TDGListPage() {
   );
 }
 
-export default TDGListPage;
+export default PageUsers;
