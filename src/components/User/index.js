@@ -1,124 +1,194 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+import DeleteIcon from '@material-ui/icons/Delete';
+import SpellcheckIcon from '@material-ui/icons/Spellcheck';
+import { Link } from 'react-router-dom';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import { useMutation } from '@apollo/react-hooks';
+import { UPDATE_profile } from "../Queries";
+import moment from 'moment'
+import ImageAvator from '../Avator'
 
 const useStyles = makeStyles(theme => ({
-  card: {
-    maxWidth: 345,
+  root: {
+    width: '100%',
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+  papercustom: {
+    padding: theme.spacing(3, 2)
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+  button: {
+    margin: theme.spacing(1),
   },
-  expandOpen: {
-    transform: 'rotate(180deg)',
+  timebox: {
+    marginTop: theme.spacing(2),
   },
-  avatar: {
-    backgroundColor: red[500],
+  textcenter: {
+    justifyContent: "center",
+    alignSelf: "center",
   },
 }));
 
-export default function TDGuserPage() {
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+
+
+
+export default function PageUser({ profile }) {
+  const { address, school, career, gender, hobby, info, birthdate, avatar } = profile
+  const { id, name } = profile.author
+  const age = moment(birthdate, "MM/DD/YYYY").fromNow().split(" ")[0];
+  // const [updateprofile, { loading, error, data }] = useMutation(UPDATE_profile);
+
+  // console.log(id)
+  // const INITIAL_STATE = {
+  //   id: id,
+  //   title: title,
+  //   body: body,
+  //   completed: completed,
+  //   visibility: visibility,
+  //   date: date
+  // }
+  // const [values, setValues] = React.useState(INITIAL_STATE)
+  // const [checked, setChecked] = React.useState(completed);
+  const [open, setOpen] = React.useState(false)
+  const classes = useStyles();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // const setCheckorNot = (val) => {
+  //   let id = profile.id
+  //   let author = localStorage.getItem('id')
+  //   let title = profile.title
+  //   let body = profile.body
+  //   let completed = new Boolean(val)
+  //   let visibility = new Boolean(profile.visibility)
+  //   updateprofile({ variables: { id, title, body, completed, visibility, author } })
+  //   setChecked(completed)
+  // }
+
+  // const handleCheckChange = () => {
+
+  //   //event.target.checked? (setCheckorNot(false), anotherFun()) : setCheckorNot(true)
+  //   checked ? setCheckorNot(false) : setCheckorNot(true)
+
+  // };
+
+  // const handleChange = (e) => {
+
+  //   e.persist();
+  //   setValues(previousValues => ({
+  //     ...previousValues, [e.target.name]: e.target.value
+  //   }))
+  // }
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   let id = profile.id
+  //   let author = localStorage.getItem('id')
+  //   let title = values.title
+  //   let body = values.body
+  //   let completed = new Boolean(values.completed)
+  //   let visibility = new Boolean(values.visibility)
+
+  //   updateprofile({ variables: { id, title, body, completed, visibility, author } })
+
+  //   setOpen(false);
+
+  // }
+
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   return (
-    <Card className={classes.card}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
+    <ExpansionPanel>
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-label="Expand"
+        aria-controls="additional-actions1-content"
+        id="additional-actions1-header"
+      >
+        <ListItem alignItems="flex-start">
+          <ListItemAvatar>
+            <Avatar alt={name} src={avatar} />
+          </ListItemAvatar>
+          <ListItemText
+            primary={name}
+            secondary={
+              <React.Fragment>
+                <Typography
+                  component="span"
+                  variant="body2"
+                  className={classes.inline}
+                  color="textPrimary"
+                >
+                  A {career} {`  `}
+                </Typography>
+                - graduated from {school}
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>
+        <ImageAvator alt={name} img={avatar} />
+        <div className={classes.papercustom} borderBottom={0}>
+          <Typography variant="h6" component="h3">
+            Name : {name}
           </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
+          <Typography component="p">
+            Career : A {career}
           </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
+          <Typography component="p">
+            Address Line : Live at {address}
           </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
+          <Typography variant="p" component="p">
+            Gender : {gender}
           </Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
+          <Typography variant="p" component="p">
+            Hobby : {hobby}
+          </Typography>
+          <Typography component="p">
+            Career : A {career}
+          </Typography>
+          <Typography component="p">
+            {age} years old
+          </Typography>
+          <Typography variant="p" component="p">
+            Bio : {info}
+          </Typography>
+          <Typography variant="p" component="p">
+            Studied at {school}
+          </Typography>
+        </div>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
+
   );
 }

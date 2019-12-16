@@ -20,6 +20,27 @@ export const GET_USERS = gql`
 }
 `
 
+export const GET_PROFILES = gql`
+{
+  profiles{
+    id
+    avatar
+    address
+    career
+    school
+    gender
+    hobby
+    birthdate
+    info
+    author{
+      name
+      id
+    }
+  }
+}
+
+`
+
 export const GET_ME = gql`
 query User($id : String!){
     users(query: $id){
@@ -31,6 +52,7 @@ query User($id : String!){
   }
 }
 `
+
 
 export const GET_RPIVATE_TASKS = gql`
 query User($id: String!){
