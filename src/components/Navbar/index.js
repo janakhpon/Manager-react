@@ -28,7 +28,8 @@ import { useMutation } from '@apollo/react-hooks';
 import { CREATE_TASK } from "../Queries";
 import { Link, useHistory } from 'react-router-dom'
 import * as routes from '../../constants/routes'
-import SignOutButton from '../Signout'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import { useQuery } from 'react-apollo'
 import { GET_ME } from '../Queries'
 
@@ -117,7 +118,7 @@ const useStyles = makeStyles(theme => ({
 const INITIAL_STATE = {
   title: "",
   body: "",
-  visibility: "",
+  visibility: false,
   author: ""
 }
 
@@ -126,6 +127,7 @@ const PageNav = ({ session }) => {
   const history = useHistory()
   const [createTask] = useMutation(CREATE_TASK);
   const [values, setValues] = React.useState(INITIAL_STATE)
+  const [checked, setChecked] = React.useState(false);
   const [open, setOpen] = React.useState(false)
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -154,6 +156,12 @@ const PageNav = ({ session }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const handleCheckChange = (e) => {
+    checked ? setChecked(false) : setChecked(true)
+
+
+};
+
   const handleChange = (e) => {
 
     e.persist();
@@ -167,7 +175,9 @@ const PageNav = ({ session }) => {
     let author = localStorage.getItem('id')
     let title = values.title
     let body = values.body
-    let visibility = new Boolean(values.visibility)
+    let visibility = checked
+
+
 
     createTask({ variables: { title, body, visibility, author } })
 
@@ -206,9 +216,10 @@ const PageNav = ({ session }) => {
           HOME
       </NavLink>
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>        <NavLink to={routes.SIGN_UP}>
+      <MenuItem onClick={handleMenuClose}>
+      <NavLink to={routes.SIGN_UP}>
         SIGN UP
-  </NavLink></MenuItem>
+      </NavLink></MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <NavLink to={routes.SIGN_IN}>
           SIGN IN
@@ -234,7 +245,7 @@ const PageNav = ({ session }) => {
     >
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>{session.name}</MenuItem>
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
-        <NavLink to={routes.TASKS}>
+        <NavLink to={routes.PRIVATETASKS}>
          Private Tasks
       </NavLink>
       </MenuItem>
@@ -459,17 +470,14 @@ const PageNav = ({ session }) => {
           />
 
 
-          <TextField
-            onChange={handleChange}
-            value={values.visibility}
-            autoFocus
-            margin="dense"
-            id="visibility"
-            name="visibility"
-            label="visibility: true/false"
-            type="text"
-            fullWidth
-          />
+          <FormControlLabel
+          control={
+            <Checkbox
+              checked={checked} onClick={handleCheckChange}
+            />
+          }
+          label="Available to Public?"
+        />
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleSubmit} color="primary">
