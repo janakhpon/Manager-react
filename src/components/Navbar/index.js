@@ -160,7 +160,7 @@ const PageNav = ({ session }) => {
     checked ? setChecked(false) : setChecked(true)
 
 
-};
+  };
 
   const handleChange = (e) => {
 
@@ -217,8 +217,8 @@ const PageNav = ({ session }) => {
       </NavLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-      <NavLink to={routes.SIGN_UP}>
-        SIGN UP
+        <NavLink to={routes.SIGN_UP}>
+          SIGN UP
       </NavLink></MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <NavLink to={routes.SIGN_IN}>
@@ -243,17 +243,21 @@ const PageNav = ({ session }) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem className={classes.menuItem} onClick={handleMenuClose}>{session.name}</MenuItem>
+      <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
+        <NavLink to={routes.ME}>
+          {session.name}
+        </NavLink>
+      </MenuItem>
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
         <NavLink to={routes.PRIVATETASKS}>
-         Private Tasks
+          Private Tasks
       </NavLink>
       </MenuItem>
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
-      <NavLink to={routes.PUBLICTASKS}>
-        Public Tasks
+        <NavLink to={routes.PUBLICTASKS}>
+          Public Tasks
     </NavLink>
-    </MenuItem>
+      </MenuItem>
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
         <NavLink to={routes.USERS}>
           List Users
@@ -471,13 +475,13 @@ const PageNav = ({ session }) => {
 
 
           <FormControlLabel
-          control={
-            <Checkbox
-              checked={checked} onClick={handleCheckChange}
-            />
-          }
-          label="Available to Public?"
-        />
+            control={
+              <Checkbox
+                checked={checked} onClick={handleCheckChange}
+              />
+            }
+            label="Available to Public?"
+          />
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleSubmit} color="primary">

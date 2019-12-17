@@ -148,7 +148,7 @@ export default function PageUser({ profile }) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  A {career} {`  `}
+                  {career} {`  `}
                 </Typography>
                 - graduated from {school}
               </React.Fragment>
@@ -163,7 +163,7 @@ export default function PageUser({ profile }) {
             Name : {name}
           </Typography>
           <Typography component="p">
-            Career : A {career}
+            Career : {career}
           </Typography>
           <Typography component="p">
             Address Line : Live at {address}
