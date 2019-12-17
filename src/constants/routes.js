@@ -1,5 +1,5 @@
 //Defaults
-export const LANDING = '/*'
+export const LANDING = '/'
 export const SIGN_UP = '/Page-signup'
 export const SIGN_IN = '/Page-signin'
 export const ERROR = '/Page-error'

@@ -1,18 +1,29 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {
-    ...theme.typography.button,
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(1),
-    justifyContent: "center",
-    alignSelf: "center"
+    width: '100%',
+    maxWidth: 800,
+    marginTop: 5,
   },
-}));
+});
 
 export default function PageError() {
   const classes = useStyles();
 
-  return <div className={classes.root}><h1>{" 404/503 | Sorry!"}</h1></div>;
+  return (
+    <div className={classes.root}>
+      <Typography variant="h3" gutterBottom>
+        ERROR. 404/502/403
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        Oops! Sorry
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        We have a few issues here, may be you are not authorized or tryin to make bad request that are not supposed to do!
+      </Typography>
+    </div>
+  );
 }

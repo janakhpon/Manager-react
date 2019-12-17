@@ -52,7 +52,24 @@ query User($id : String!){
   }
 }
 `
-
+export const GET_PROFILE = gql`
+query Profile($author: String!){
+    profiles(query: $author){
+      author{
+        name
+        email
+      }
+      avatar
+      address
+      career
+      info
+      hobby
+      school
+      birthdate
+      gender
+    }
+}
+`
 
 export const GET_RPIVATE_TASKS = gql`
 query User($id: String!){

@@ -10,13 +10,15 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
+
 
 
 const useStyles = makeStyles(theme => ({
     card: {
-        maxWidth: 800,
-        border: 0,
+        maxWidth:800,
         textAlign: "center",
         overflow: "hidden",
     },
@@ -32,28 +34,32 @@ const useStyles = makeStyles(theme => ({
             margin: theme.spacing(1),
         },
     },
+    margin: {
+        margin: theme.spacing(1),
+    },
 }));
 
-export default function PageLanding() {
+export default function PageMeNegative() {
     const classes = useStyles();
 
     return (
         <Card className={classes.card}>
             <CardActionArea>
                 <CardContent>
-                    <div className={classes.image}>
-                    <Typography variant="h3" gutterBottom>
-                   Manager
-                  </Typography>
-                    </div>
-
                     <Typography
                         className={"MuiTypography--heading"}
                         variant={"h6"}
                         gutterBottom
                     >
-                        Your presonal coach for time management
-          </Typography>
+                        No Profile Found!
+                    </Typography>
+                    <Typography
+                        className={"MuiTypography--subheading"}
+                        variant={"caption"}
+                    >
+                        You don't have a profile yet! .. 
+                 </Typography>
+                   
                     
                 </CardContent>
             </CardActionArea>
