@@ -22,11 +22,11 @@ export default function PageMe() {
     return (
         <>
         {
-            data? (
-                <PageMePositive data={data} />
+            data.profiles.length === 0 ? (
+                <PageMeNegative />
             ):
             (
-                <PageMeNegative />
+                <PageMePositive data={data} />
 
             )
         }
