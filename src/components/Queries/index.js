@@ -139,6 +139,36 @@ mutation User($name: String!, $email: String!, $phone: String!, $password: Strin
 }
 `
 
+export const CREATE_PROFILE = gql`
+mutation Profile($address: String!, $info: String!, $gender: String!, $avatar: String!, $school: String!, $career: String!, $hobby: String!, $birthdate: String!, $author: ID!){
+    createProfile(data: {
+      address: $address,
+      info: $info,
+      gender: $gender,
+      avatar: $avatar,
+      school: $school,
+      career: $career,
+      hobby: $hobby,
+      birthdate: $birthdate,
+      author: $author
+    }){
+      address
+      info
+      gender
+      avatar
+      school
+      career
+      hobby
+      birthdate
+      author{
+        id
+        name
+        email
+      }
+    }
+}
+`
+
 export const USER_LOGIN = gql`
 mutation User($email: String!, $password: String!){
   userLogin(data: {
