@@ -79,7 +79,6 @@ export default function PgenderMeNegative() {
     const [gender, setGender] = React.useState('');
     const [open, setOpen] = React.useState(false)
     const [selectedDate, setSelectedDate] = React.useState(new Date());
-    const [bopen, setBopen] = React.useState(false);
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -205,8 +204,8 @@ export default function PgenderMeNegative() {
                                 }}
                             >
                                 <option value="" />
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
                             </Select>
                         </FormControl>
 
