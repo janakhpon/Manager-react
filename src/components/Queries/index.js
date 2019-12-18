@@ -55,6 +55,7 @@ query User($id : String!){
 export const GET_PROFILE = gql`
 query Profile($author: String!){
     profiles(query: $author){
+      id
       author{
         name
         email
@@ -168,6 +169,49 @@ mutation Profile($address: String!, $info: String!, $gender: String!, $avatar: S
     }
 }
 `
+
+export const UPDATE_PROFILE = gql`
+mutation Profile($id: ID!, $address: String!, $info: String!, $gender: String!, $avatar: String!, $school: String!, $career: String!, $hobby: String!, $birthdate: String!, $author: ID!){
+    updateProfile(data: {
+      id: $id,
+      address: $address,
+      info: $info,
+      gender: $gender,
+      avatar: $avatar,
+      school: $school,
+      career: $career,
+      hobby: $hobby,
+      birthdate: $birthdate,
+      author: $author
+    }){
+      id
+      address
+      info
+      gender
+      avatar
+      school
+      career
+      hobby
+      birthdate
+      author{
+        id
+        name
+        email
+      }
+    }
+}
+`
+
+export const DELETE_PROFILE = gql`
+mutation Profile($id: ID!){
+  deleteProfile(data: {
+    id: $id
+  }){
+    id
+  }
+}
+`
+
 
 export const USER_LOGIN = gql`
 mutation User($email: String!, $password: String!){
