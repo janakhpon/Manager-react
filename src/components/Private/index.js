@@ -4,6 +4,7 @@ import { GET_RPIVATE_TASKS} from "../Queries"
 import PageLoading from '../Loading';
 import PageError from '../Error';
 import PagePrivateTask from '../PrivateTask'
+import PageNoTask from '../Notask'
 
 
 
@@ -18,6 +19,8 @@ export default function PagePrivateTasks(props) {
 
     if (getAllTasks.loading) return <PageLoading />;
     if (getAllTasks.error) return <PageError />;
+
+    if (getAllTasks.data.users[0].tasks.length === 0) return <PageNoTask />;
     
     const data = getAllTasks.data;
   

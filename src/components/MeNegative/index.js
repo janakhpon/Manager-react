@@ -21,8 +21,14 @@ import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import DateFnsUtils from "@date-io/date-fns"; // import
+import { DatePicker, MuiPickersUtilsProvider } from "material-ui-pickers";
 import { useMutation } from '@apollo/react-hooks';
-import { CREATE_TASK } from "../Queries";
+import { CREATE_TASK, CREATE_PROFILE } from "../Queries";
+import { format } from 'date-fns'
+import PageLoading from '../Loading'
+import PageError from '../Error'
+import PageMePositive from '../MePositive'
 
 
 
@@ -37,7 +43,7 @@ const useStyles = makeStyles(theme => ({
         width: 200,
         height: 200,
     },
-    image: {
+    imgender: {
         display: 'flex',
         alignItems: "center",
         justifyContent: "center",
@@ -56,10 +62,23 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(2),
     },
 }));
+const INIT_STATE = {
+    address: "",
+    info: "",
+    gender: "",
+    avatar: "",
+    school: "",
+    career: "",
+    hobby: "",
+    birthdate: ""
+}
 
-export default function PageMeNegative() {
+export default function PgenderMeNegative() {
+    const [createProfile, {loading, error, data}] = useMutation(CREATE_PROFILE);
+    const [values, setValues] = React.useState(INIT_STATE)
+    const [gender, setGender] = React.useState('');
     const [open, setOpen] = React.useState(false)
-    const [age, setAge] = React.useState('');
+    const [selectedDate, setSelectedDate] = React.useState(new Date());
     const [bopen, setBopen] = React.useState(false);
     const classes = useStyles();
     const theme = useTheme();
@@ -74,23 +93,45 @@ export default function PageMeNegative() {
     };
 
     const handleChange = event => {
-        setAge(event.target.value);
+        setValues((previousValues) => ({
+            ...previousValues, [event.target.name]: event.target.value
+        }))
+    };
+    const handleDateChange = date => {
+        setSelectedDate(date);
     };
 
-    const handleBclose = () => {
+    const handleSelectChange = e => {
+        setGender(e.target.value);
+    }
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        let address = values.address
+        let info = values.info
+        let avatar = values.avatar
+        let school = values.school
+        let career = values.career
+        let hobby = values.hobby
+        let birthdate =format(new Date( selectedDate), 'MM-dd-yyyy')
+        let author = localStorage.getItem('id')
+        const gosave = await createProfile({
+             variables: {address, info, gender, avatar, school, career, hobby, birthdate, author}
+        })
+
+        if (gosave.loading) return <PageLoading />
+        if (gosave.error) return <PageError />
+        // if (gosave.data) return <PageMePositive data={gosave.data} />
+
         setOpen(false);
-    };
 
-    const handleBopen = () => {
-        setOpen(true);
-    };
-
+    }
     return (
         <Card className={classes.card}>
 
             <CardActionArea>
                 <CardContent>
-                    <div className={classes.image}>
+                    <div className={classes.imgender}>
                         <Avatar alt="Unknown" src="https://img.pngio.com/question-mark-png-5a381257a892436425987715136241516905-1-savory-png-for-question-mark-900_1020.jpg" className={classes.bigAvatar} />
                     </div>
 
@@ -129,96 +170,104 @@ export default function PageMeNegative() {
                     <DialogContent>
 
                         <TextField
+                            onChange={handleChange}
+                            value={values.address}
                             autoFocus
                             margin="dense"
-                            id="name"
-                            name="title"
-                            label="Task Title"
+                            id="address"
+                            name="address"
+                            label="Address"
                             type="text"
                             fullWidth
                         />
 
                         <TextField
+                            onChange={handleChange}
+                            value={values.info}
                             autoFocus
                             margin="dense"
-                            id="body"
-                            name="body"
-                            label="Task Description"
-                            type="text"
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            name="title"
-                            label="Task Title"
+                            id="info"
+                            name="info"
+                            label="Your Bio/ Status"
                             type="text"
                             fullWidth
                         />
 
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="body"
-                            name="body"
-                            label="Task Description"
-                            type="text"
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            name="title"
-                            label="Task Title"
-                            type="text"
-                            fullWidth
-                        />
-
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="body"
-                            name="body"
-                            label="Task Description"
-                            type="text"
-                            fullWidth
-                        />
-
-                        <TextField
-                            id="date"
-                            label="Birthday"
-                            type="date"
-                            defaultValue="2017-05-24"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                        <br />
-                        <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="age-native-simple">Age</InputLabel>
+                        <FormControl className={classes.formControl} fullWidth>
+                            <InputLabel htmlFor="gender-native-simple">Gender</InputLabel>
                             <Select
                                 native
-                                value={age}
-                                onChange={handleChange}
+                                value={gender}
+                                onChange={handleSelectChange}
                                 inputProps={{
-                                    name: 'age',
-                                    id: 'age-native-simple',
+                                    name: 'gender',
+                                    id: 'gender-native-simple',
                                 }}
                             >
                                 <option value="" />
-                                <option value={10}>Ten</option>
-                                <option value={20}>Twenty</option>
-                                <option value={30}>Thirty</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                             </Select>
                         </FormControl>
 
+                        <TextField
+                            onChange={handleChange}
+                            value={values.avatar}
+                            autoFocus
+                            margin="dense"
+                            id="avatar"
+                            name="avatar"
+                            label="Avatar Link"
+                            type="text"
+                            fullWidth
+                        />
 
+                        <TextField
+                            onChange={handleChange}
+                            value={values.school}
+                            autoFocus
+                            margin="dense"
+                            id="school"
+                            name="school"
+                            label="Graduated from"
+                            type="text"
+                            fullWidth
+                        />
+
+                        <TextField
+                            onChange={handleChange}
+                            value={values.career}
+                            autoFocus
+                            margin="dense"
+                            id="career"
+                            name="career"
+                            label="Career"
+                            type="text"
+                            fullWidth
+                        />
+
+
+                        <TextField
+                            onChange={handleChange}
+                            value={values.hobby}
+                            autoFocus
+                            margin="dense"
+                            id="hobby"
+                            name="hobby"
+                            label="Hobby"
+                            type="text"
+                            fullWidth
+                        />
+
+                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <DatePicker value={selectedDate} onChange={handleDateChange}/>
+                       </MuiPickersUtilsProvider>
+
+                    
 
                     </DialogContent>
                     <DialogActions>
-                        <Button autoFocus color="primary">
+                        <Button autoFocus color="primary" onClick={handleSubmit}>
                             SAVE
                   </Button>
                         <Button onClick={handleClose} color="primary" autoFocus>
