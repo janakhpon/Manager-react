@@ -19,22 +19,40 @@ export default function PagePrivateTasks(props) {
 
     if (getAllTasks.loading) return <PageLoading />;
     if (getAllTasks.error) return <PageError />;
-
-    if (getAllTasks.data.users[0].tasks.length === 0) return <PageNoTask />;
+    console.log(getAllTasks)
+    if (getAllTasks && getAllTasks.data && getAllTasks.data.users.length !== 0){
+      if (getAllTasks.data.users[0].tasks.length === 0) return <PageNoTask />;
+    }
+    if (!getAllTasks && getAllTasks.data.users.length === 0) return <PageError />;
+    
     
     const data = getAllTasks.data;
   
   
+    const yess = () => {
+      return (
+        <>
+        {
+          data.users[0].tasks.map((task, key) => {
+            return <PagePrivateTask task={task} key={key} />
+          })
+        }
+        </>
+      )
+    }
+
+    const noo = () => {
+      return (
+        <h1>Sorry</h1>
+      )
+    }
 
 
   return (
     <>
-      {
-        data.users[0].tasks.map((task, key) => {
-          return <PagePrivateTask task={task} key={key} />
-        })
-      }
-
+    {
+      data.users.length === 0 ? (<noo/>) : (<yess/>)
+    }
     </>
   );
 }
