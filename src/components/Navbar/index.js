@@ -186,9 +186,7 @@ const PageNav = ({ session }) => {
   }
 
   const lockMeOut = (e) => {
-    localStorage.setItem('id', null)
-    localStorage.setItem('name', null)
-    localStorage.setItem('num', null)
+    localStorage.clear();
     history.push('/Page-signin')
 
   }
@@ -277,7 +275,7 @@ const PageNav = ({ session }) => {
           startIcon={<LockIcon />}
           onClick={lockMeOut}
         >
-          Signout
+          SIGNOUT
     </Button>
       </MenuItem>
     </Menu>
@@ -405,16 +403,8 @@ const PageNav = ({ session }) => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {session ? (
+            {session.name === null ? (
               <>
-                <IconButton color="inherit">
-                  <EditOutlinedIcon onClick={handleClickOpen} />
-                </IconButton>
-                <IconButton aria-label="show new notifications" color="inherit">
-                  <Badge badgeContent={parseInt(session.numoftask)} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
                 <IconButton
                   edge="end"
                   aria-label="account of current user"
@@ -428,6 +418,14 @@ const PageNav = ({ session }) => {
               </>
             ) : (
                 <>
+                  <IconButton color="inherit">
+                    <EditOutlinedIcon onClick={handleClickOpen} />
+                  </IconButton>
+                  <IconButton aria-label="show new notifications" color="inherit">
+                    <Badge badgeContent={parseInt(session.numoftask)} color="secondary">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
                   <IconButton
                     edge="end"
                     aria-label="account of current user"
@@ -438,7 +436,6 @@ const PageNav = ({ session }) => {
                   >
                     <AccountCircle />
                   </IconButton>
-
                 </>
               )
             }
@@ -456,9 +453,8 @@ const PageNav = ({ session }) => {
           </div>
         </Toolbar>
       </AppBar>
-
-      {session ? renderMobileMenuAuthed : renderMobileMenu}
-      {session ? renderMenuAuthed : renderMenu}
+      {session.name === null ? renderMobileMenu : renderMobileMenuAuthed}
+      {session.name === null ? renderMenu : renderMenuAuthed}
 
       <Dialog
         fullScreen={fullScreen}
