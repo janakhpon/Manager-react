@@ -11,10 +11,11 @@
 
 ## Features that is not included yet
  1. realtime Subscription 
+ 2. aleart box to notify
 
 
 ## RELEASE_STATUS:IN PROGRESS
-## RELEASE_CODE: GDEV022
+## RELEASE_CODE: GDEV023
  Sorry this project is not completely done yet and only a few features are available. If you are considering about cloning this project please wait till it's completed.
 
 ## Description

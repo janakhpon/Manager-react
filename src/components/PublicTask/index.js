@@ -6,7 +6,6 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
-import { Link } from 'react-router-dom';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
@@ -46,7 +45,6 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function PagePublicTask({ task }) {
-    const { id, title, body, completed, visibility, date } = task
     const [open, setOpen] = React.useState(false)
     const classes = useStyles();
     const theme = useTheme();
