@@ -2,14 +2,12 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent'
 import Divider from "@material-ui/core/Divider";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Fab from '@material-ui/core/Fab';
@@ -24,11 +22,10 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import DateFnsUtils from "@date-io/date-fns"; // import
 import { DatePicker, MuiPickersUtilsProvider } from "material-ui-pickers";
 import { useMutation } from '@apollo/react-hooks';
-import { CREATE_TASK, CREATE_PROFILE } from "../Queries";
+import { CREATE_PROFILE } from "../Queries";
 import { format } from 'date-fns'
 import PageLoading from '../Loading'
 import PageError from '../Error'
-import PageMePositive from '../MePositive'
 
 
 
@@ -74,7 +71,7 @@ const INIT_STATE = {
 }
 
 export default function PgenderMeNegative() {
-    const [createProfile, {loading, error, data}] = useMutation(CREATE_PROFILE);
+    const [createProfile] = useMutation(CREATE_PROFILE);
     const [values, setValues] = React.useState(INIT_STATE)
     const [gender, setGender] = React.useState('');
     const [open, setOpen] = React.useState(false)

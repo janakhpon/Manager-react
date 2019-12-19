@@ -7,7 +7,6 @@ const useStyles = makeStyles({
     width: '100%',
     maxWidth: 800,
     marginTop: 5,
-    background : 'mediumblue'
   },
 });
 

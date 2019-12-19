@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import * as routes from '../../constants/routes'
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -15,13 +17,23 @@ import Container from '@material-ui/core/Container';
 import { useMutation } from '@apollo/react-hooks';
 import { CREATE_USER } from '../Queries';
 
+const NavLink = styled(Link)`
+    text-decoration: none;
+    text-align: center;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
+      <NavLink color="inherit" to={routes.LANDING}>
+        Greentech Innovation Group
+      </NavLink>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -58,7 +70,7 @@ const INITIAL_VALUES = {
 
 const PageSignup = () => {
   const [values, setValues] = React.useState(INITIAL_VALUES)
-  const [createUser, {loading, error, data}] = useMutation(CREATE_USER);
+  const [createUser] = useMutation(CREATE_USER);
   const classes = useStyles();
 
 
@@ -160,9 +172,9 @@ const PageSignup = () => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
+              <NavLink to={routes.SIGN_IN} variant="body2">
                 {"Already have an account? Sign In"}
-              </Link>
+              </NavLink>
             </Grid>
           </Grid>
         </form>

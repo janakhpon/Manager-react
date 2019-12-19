@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, useHistory, useLocation } from 'react-router-dom'
+import { Route, useLocation } from 'react-router-dom'
 import * as routes from '../../constants/routes'
 import Container from '@material-ui/core/Container'
 import styled from 'styled-components'
@@ -20,7 +20,6 @@ import PageLoading from '../Loading'
 
 const DContainer = styled.div`
 overflow: hidden;
-color:white;
 margin: 1rem;
 padding: 1rem;
 display: flex;
@@ -34,7 +33,6 @@ align-content: center
 @media all and (max-width: 800px) {
   overflow:hidden;
   overflow: hidden;
-  color:white;
   margin: 1rem;
   padding: 1rem;
   height: 60rem;
@@ -49,7 +47,6 @@ align-content: center
 @media all and (max-width: 500px) {
   overflow:hidden;
   overflow: hidden;
-  color:white;
   margin: 0.4rem;
   padding: 0.4rem;
   height: 40rem;

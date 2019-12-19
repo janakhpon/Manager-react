@@ -30,8 +30,6 @@ import { Link, useHistory } from 'react-router-dom'
 import * as routes from '../../constants/routes'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { useQuery } from 'react-apollo'
-import { GET_ME } from '../Queries'
 
 const NavLink = styled(Link)`
     text-decoration: none;

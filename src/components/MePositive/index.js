@@ -2,7 +2,6 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent'
 import Divider from "@material-ui/core/Divider";
 import Avatar from '@material-ui/core/Avatar';
@@ -72,7 +71,7 @@ export default function PageMePostive({ data }) {
         author
     }
     const [values, setValues] = React.useState(INIT_STATE)
-    const [updateProfile, { loading, error }] = useMutation(UPDATE_PROFILE);
+    const [updateProfile] = useMutation(UPDATE_PROFILE);
     const [deleteProfile] = useMutation(DELETE_PROFILE)
     const [gend, setGend] = React.useState(gender);
     const [open, setOpen] = React.useState(false)

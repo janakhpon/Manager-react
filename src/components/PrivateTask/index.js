@@ -6,7 +6,6 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
-import { Link } from 'react-router-dom';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
@@ -22,8 +21,6 @@ import { useTheme } from '@material-ui/core/styles';
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_TASK } from "../Queries";
 import moment from 'moment'
-import PDGloadingPage from '../Loading';
-import PDGerrorPage from '../Error';
 import ImageAvator from '../Avator'
 
 const useStyles = makeStyles(theme => ({
@@ -51,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function PagePrivateTask({ task }) {
     const { id, title, body, completed, visibility, date } = task
-    const [updateTask, { loading, error, data }] = useMutation(UPDATE_TASK);
+    const [updateTask] = useMutation(UPDATE_TASK);
 
     console.log(id)
     const INITIAL_STATE = {
@@ -74,8 +71,8 @@ export default function PagePrivateTask({ task }) {
         let author = localStorage.getItem('id')
         let title = task.title
         let body = task.body
-        let completed = new Boolean(val)
-        let visibility = new Boolean(task.visibility)
+        let completed = Boolean(val)
+        let visibility = Boolean(task.visibility)
         updateTask({ variables: { id, title, body, completed, visibility, author } })
         setChecked(completed)
     }
@@ -102,8 +99,8 @@ export default function PagePrivateTask({ task }) {
         let author = localStorage.getItem('id')
         let title = values.title
         let body = values.body
-        let completed = new Boolean(values.completed)
-        let visibility = new Boolean(values.visibility)
+        let completed = Boolean(values.completed)
+        let visibility = Boolean(values.visibility)
 
         updateTask({ variables: { id, title, body, completed, visibility, author } })
 
