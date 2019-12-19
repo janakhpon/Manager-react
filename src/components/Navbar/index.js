@@ -233,11 +233,12 @@ const PageNav = ({ session }) => {
     </Menu>
   );
 
+  const menuAuthedId = 'primary-search-account-menu';
   const renderMenuAuthed = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
+      id={menuAuthedId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
@@ -294,59 +295,79 @@ const PageNav = ({ session }) => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <EditOutlinedIcon />
-          </Badge>
-        </IconButton>
-        <Link to="/app-form">
-          NewTASKS          </Link>
+        <NavLink to={routes.LANDING}>
+          HOME
+        </NavLink>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <NavLink to={routes.SIGN_UP}>
+          SIGN UP
+    </NavLink></MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <NavLink to={routes.SIGN_IN}>
+          SIGN IN
+    </NavLink>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <NavLink to={routes.HELP}>
+          HELP
+      </NavLink>
+      </MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuAuthedId = 'primary-search-account-menu-mobile-authed';
+  const renderMobileMenuAuthed = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={mobileMenuAuthedId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <NavLink to={routes.ME}>
+          {session.name}
+        </NavLink>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <EditOutlinedIcon />
-          </Badge>
-        </IconButton>
-        <Link to="/app-form">
-          NewTASKS        </Link>
+        <NavLink to={routes.PRIVATETASKS}>
+          Private Tasks
+  </NavLink>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <EditOutlinedIcon />
-          </Badge>
-        </IconButton>
-        <Link to="/app-form">
-          NewTASKS      </Link>
+        <NavLink to={routes.PUBLICTASKS}>
+          Public Tasks
+</NavLink>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <EditOutlinedIcon />
-          </Badge>
-        </IconButton>
-        <Link to="/app-form">
-          NewTASKS          </Link>
+        <NavLink to={routes.USERS}>
+          List Users
+  </NavLink>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <NavLink to={routes.HELP}>
+          HELP ME
+        </NavLink>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
+      <MenuItem>
+        <IconButton aria-label="new task" color="inherit">
+          <EditOutlinedIcon onClick={handleClickOpen} />
+        </IconButton>
+        NEW TASK
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Button
+          color="secondary"
+          size="small"
+          className={classes.button}
+          startIcon={<LockIcon />}
+          onClick={lockMeOut}
         >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+          Signout
+  </Button>
       </MenuItem>
     </Menu>
   );
@@ -362,10 +383,9 @@ const PageNav = ({ session }) => {
             color="inherit"
             aria-label="open drawer"
           >
-            <Link to="/">
+            <NavLink to={routes.LANDING}>
               <MenuIcon />
-            </Link>
-
+            </NavLink>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Manager
@@ -390,7 +410,7 @@ const PageNav = ({ session }) => {
                 <IconButton color="inherit">
                   <EditOutlinedIcon onClick={handleClickOpen} />
                 </IconButton>
-                <IconButton aria-label="show 17 new notifications" color="inherit">
+                <IconButton aria-label="show new notifications" color="inherit">
                   <Badge badgeContent={parseInt(session.numoftask)} color="secondary">
                     <NotificationsIcon />
                   </Badge>
@@ -437,7 +457,7 @@ const PageNav = ({ session }) => {
         </Toolbar>
       </AppBar>
 
-      {renderMobileMenu}
+      {session ? renderMobileMenuAuthed : renderMobileMenu}
       {session ? renderMenuAuthed : renderMenu}
 
       <Dialog
