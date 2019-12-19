@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
         border: 0,
         textAlign: "center",
         overflow: "hidden",
+        background : 'mediumblue'
     },
     bigAvatar: {
         width: 200,

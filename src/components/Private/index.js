@@ -23,14 +23,16 @@ export default function PagePrivateTasks(props) {
     if (getAllTasks && getAllTasks.data && getAllTasks.data.users.length !== 0){
       if (getAllTasks.data.users[0].tasks.length === 0) return <PageNoTask />;
     }
-    if (!getAllTasks && getAllTasks.data.users.length === 0) return <PageError />;
+    if (getAllTasks.data.users.length === 0) return <PageError />;
     
     
     const data = getAllTasks.data;
-  
-  
-    const yess = () => {
-      return (
+
+
+  return (
+    <>
+    {
+      data.users.length == 0 ? (<h1>not found</h1>) : (
         <>
         {
           data.users[0].tasks.map((task, key) => {
@@ -39,19 +41,6 @@ export default function PagePrivateTasks(props) {
         }
         </>
       )
-    }
-
-    const noo = () => {
-      return (
-        <h1>Sorry</h1>
-      )
-    }
-
-
-  return (
-    <>
-    {
-      data.users.length === 0 ? (<noo/>) : (<yess/>)
     }
     </>
   );
