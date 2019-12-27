@@ -40,6 +40,10 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignSelf: "center",
     },
+    expand: {
+        color: "#ffffff",
+        backgroundColor: "#003459",
+    }
 }));
 
 
@@ -118,7 +122,7 @@ export default function PagePrivateTask({ task }) {
 
 
     return (
-        <ExpansionPanel>
+        <ExpansionPanel className={classes.expand}>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-label="Expand"

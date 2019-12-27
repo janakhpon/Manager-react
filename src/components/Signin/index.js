@@ -21,26 +21,17 @@ import * as routes from '../../constants/routes'
 
 const NavLink = styled(Link)`
     text-decoration: none;
+    outline: none;
     text-align: center;
+    color: #ffffff;
 
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
+        outline: none;
+        color: #0984e3;
     }
 `;
 
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <NavLink color="inherit" to={routes.LANDING}>
-        Greentech Innovation Group
-      </NavLink>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -84,28 +75,28 @@ const PageSignin = () => {
 
   }
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let email = values.email
     let password = values.password
 
-    
-    
-    try{
-     const logg = await userLogin({ variables: { email, password } })
-     localStorage.setItem('id', logg.data.userLogin.user.id)
-     localStorage.setItem('name', logg.data.userLogin.user.name)
-     localStorage.setItem('num', logg.data.userLogin.user.tasks.length)
-     console.log(logg)
- 
-     history.push('/Page-private-tasks')
-    }catch(err){
+
+
+    try {
+      const logg = await userLogin({ variables: { email, password } })
+      localStorage.setItem('id', logg.data.userLogin.user.id)
+      localStorage.setItem('name', logg.data.userLogin.user.name)
+      localStorage.setItem('num', logg.data.userLogin.user.tasks.length)
+      console.log(logg)
+
+      history.push('/Page-private-tasks')
+    } catch (err) {
 
 
     }
 
-      
+
   }
 
 
@@ -118,7 +109,7 @@ const PageSignin = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          CREATE AN ACCOUNT
+          UNLOCK YOUR ACCOUNT
         </Typography>
         <form className={classes.form} noValidate>
 
@@ -162,17 +153,14 @@ const PageSignin = () => {
             SIGN IN
           </Button>
           <Grid container>
-            <Grid item>
-              <NavLink to={routes.SIGN_UP} variant="body2">
+            <Grid item alignItems="center">
+              <NavLink to={routes.SIGN_UP} variant="body2" alignItems="center">
                 {"Don't have an account? SIGN UP"}
               </NavLink>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

@@ -110,6 +110,10 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  expand: {
+    color: "#ffffff",
+    backgroundColor: "#003459",
+  }
 }));
 
 
@@ -322,6 +326,8 @@ const PageNav = ({ session }) => {
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+
+
     >
       <MenuItem>
         <NavLink to={routes.ME}>
@@ -459,8 +465,15 @@ const PageNav = ({ session }) => {
         open={open}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
+        
+        PaperProps ={{
+          classes: {
+           root: classes.expand
+          }
+        }}
+
       >
-        <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle id="responsive-dialog-title">{" Don't Forget to choose your privacy options!"}</DialogTitle>
         <DialogContent>
 
           <TextField

@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
     },
     papercustom: {
-        padding: theme.spacing(3, 2)
+        padding: theme.spacing(3, 2),
     },
     button: {
         margin: theme.spacing(1),
@@ -38,6 +38,10 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignSelf: "center",
     },
+    expand: {
+        color: "#ffffff",
+        backgroundColor: "#003459",
+    }
 }));
 
 
@@ -62,7 +66,7 @@ export default function PagePublicTask({ task }) {
 
 
     return (
-        <ExpansionPanel>
+        <ExpansionPanel className={classes.expand}>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-label="Expand"

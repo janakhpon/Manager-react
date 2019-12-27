@@ -9,6 +9,9 @@ const useStyles = makeStyles(theme => ({
       marginTop: theme.spacing(2),
     },
   },
+  custom: {
+    color: '#d11149',
+  }
 }));
 
 export default function PageLoading() {
@@ -44,8 +47,7 @@ export default function PageLoading() {
 
   return (
     <div className={classes.root}>
-      <LinearProgress variant="buffer" value={completed} valueBuffer={buffer} />
-      <LinearProgress variant="buffer" value={completed} valueBuffer={buffer} color="secondary" />
+      <LinearProgress variant="buffer" value={completed} valueBuffer={buffer} className={classes.custom} color="primary" />
     </div>
   );
 }
