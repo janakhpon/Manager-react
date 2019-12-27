@@ -35,6 +35,8 @@ const useStyles = makeStyles(theme => ({
         maxWidth: 800,
         textAlign: "center",
         overflow: "hidden",
+        color: "#ffffff",
+        backgroundColor: "#003459",
     },
     bigAvatar: {
         width: 200,
@@ -100,7 +102,7 @@ export default function PgenderMeNegative() {
     const handleSelectChange = e => {
         setGender(e.target.value);
     }
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         let address = values.address
@@ -109,10 +111,10 @@ export default function PgenderMeNegative() {
         let school = values.school
         let career = values.career
         let hobby = values.hobby
-        let birthdate =format(new Date( selectedDate), 'MM-dd-yyyy')
+        let birthdate = format(new Date(selectedDate), 'MM-dd-yyyy')
         let author = localStorage.getItem('id')
         const gosave = await createProfile({
-             variables: {address, info, gender, avatar, school, career, hobby, birthdate, author}
+            variables: { address, info, gender, avatar, school, career, hobby, birthdate, author }
         })
 
         if (gosave.loading) return <PageLoading />
@@ -255,11 +257,11 @@ export default function PgenderMeNegative() {
                             fullWidth
                         />
 
-                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <DatePicker value={selectedDate} onChange={handleDateChange}/>
-                       </MuiPickersUtilsProvider>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <DatePicker value={selectedDate} onChange={handleDateChange} />
+                        </MuiPickersUtilsProvider>
 
-                    
+
 
                     </DialogContent>
                     <DialogActions>
