@@ -29,6 +29,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignSelf: "center",
   },
+  expand: {
+    color: "#ffffff",
+    backgroundColor: "#003459",
+    overflow: 'hidden'
+  },
 }));
 
 
@@ -43,7 +48,7 @@ export default function PageUser({ profile }) {
 
 
   return (
-    <ExpansionPanel>
+    <ExpansionPanel className={classes.expand}>
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-label="Expand"
