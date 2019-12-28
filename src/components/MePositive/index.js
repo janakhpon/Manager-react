@@ -55,6 +55,13 @@ const useStyles = makeStyles(theme => ({
     margin: {
         margin: theme.spacing(1),
     },
+    expand: {
+        color: "#ffffff",
+        backgroundColor: "#003459",
+    },
+    txt: {
+        color: "#fff",
+    }
 }));
 
 export default function PageMePostive({ data }) {
@@ -184,9 +191,14 @@ export default function PageMePostive({ data }) {
                                     open={open}
                                     onClose={handleClose}
                                     aria-labelledby="responsive-dialog-title"
+                                    PaperProps={{
+                                        classes: {
+                                            root: classes.expand
+                                        }
+                                    }}
                                 >
                                     <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
-                                    <DialogContent>
+                                    <DialogContent className={classes.txt}>
 
                                         <TextField
                                             onChange={handleChange}
@@ -279,9 +291,13 @@ export default function PageMePostive({ data }) {
                                         />
 
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                            <DatePicker value={selectedDate} onChange={handleDateChange} />
+                                            <DatePicker value={selectedDate} onChange={handleDateChange}
+                                            />
                                         </MuiPickersUtilsProvider>
 
+                                        <p>
+                                                {birthdate}
+                                        </p>
 
 
                                     </DialogContent>
