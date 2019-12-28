@@ -11,7 +11,7 @@ const theme = createMuiTheme({
       main: '#00171f',
     },
     text: {
-      primary: "#ffffff",
+      primary: "#000",
       secondary: "#0984e3"
     },
     error: {
@@ -21,6 +21,7 @@ const theme = createMuiTheme({
       default: '#1d3557',
     },
   },
+
 });
 
 export default theme;
