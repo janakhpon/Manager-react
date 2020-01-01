@@ -302,3 +302,15 @@ export const UPDATE_TASK = gql`
     }
   }
 `
+
+
+export const DELTE_TASK = gql`
+  mutation Task($id: ID!){
+    removeTask(data :{
+      id: $id
+    }){
+      id
+      title
+    }
+  }
+`
