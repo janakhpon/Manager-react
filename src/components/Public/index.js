@@ -4,20 +4,11 @@ import { GET_PUBLIC_TASKS } from "../Queries"
 import PagePublicTask from '../PublicTask'
 import PageLoading from '../Loading';
 import PageError from '../Error';
-
-
-
-
-
 const PagePublicTasks = () => {
-
     const getpublictask = useQuery(GET_PUBLIC_TASKS);
     if (getpublictask.loading) return <PageLoading />;
     if (getpublictask.error) return <PageError />;
     let data = getpublictask.data;
-
-
-
     return (
         <>
             {

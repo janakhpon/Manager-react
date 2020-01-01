@@ -87,9 +87,7 @@ const PageSignin = () => {
       localStorage.setItem('id', logg.data.userLogin.user.id)
       localStorage.setItem('name', logg.data.userLogin.user.name)
       localStorage.setItem('num', logg.data.userLogin.user.tasks.length)
-      console.log(logg)
-
-      history.push('/Page-private-tasks')
+      history.push('/Page-me')
     } catch (err) {
 
 

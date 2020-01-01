@@ -16,6 +16,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import { amber, green } from '@material-ui/core/colors';
+import CloseIcon from '@material-ui/icons/Close';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import Snackbar from '@material-ui/core/Snackbar';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { useMutation } from '@apollo/react-hooks';
@@ -43,12 +48,35 @@ const useStyles = makeStyles(theme => ({
     expand: {
         color: "#ffffff",
         backgroundColor: "#003459",
-    }
+    },
+    notibox: {
+        color: "#ffffff",
+        backgroundColor: "#20bf55",
+    },
+    success: {
+        backgroundColor: green[600],
+    },
+    error: {
+        backgroundColor: theme.palette.error.dark,
+    },
+    info: {
+        backgroundColor: theme.palette.primary.main,
+    },
+    warning: {
+        backgroundColor: amber[700],
+    },
+    icon: {
+        fontSize: 20,
+    },
+    iconVariant: {
+        opacity: 0.9,
+        marginRight: theme.spacing(1),
+    },
+    message: {
+        display: 'flex',
+        alignItems: 'center',
+    },
 }));
-
-
-
-
 
 export default function PagePrivateTask({ task }) {
     const { id, title, body, completed, visibility, date } = task
@@ -67,6 +95,7 @@ export default function PagePrivateTask({ task }) {
     const [values, setValues] = React.useState(INITIAL_STATE)
     const [checked, setChecked] = React.useState(completed);
     const [open, setOpen] = React.useState(false)
+    const [snackopen, setSnackopen] = React.useState(false)
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -113,12 +142,15 @@ export default function PagePrivateTask({ task }) {
 
     }
 
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
         e.preventDefault();
 
         let id = task.id
 
-        removeTask({ variables: { id } })
+        const remove = await removeTask({ variables: { id } })
+        if (remove) {
+            setSnackopen(true)
+        }
     }
 
     const handleClickOpen = () => {
@@ -129,146 +161,178 @@ export default function PagePrivateTask({ task }) {
         setOpen(false);
     };
 
+    const onClose = () => {
+        setSnackopen(false)
+        window.location.reload(false);
+    }
+
 
     return (
-        <ExpansionPanel className={classes.expand}>
-            <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-label="Expand"
-                aria-controls="additional-actions1-content"
-                id="additional-actions1-header"
+        <>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                open={snackopen}
+                autoHideDuration={6000}
             >
-                <FormControlLabel
-                    aria-label="Acknowledge"
-                    onClick={event => event.stopPropagation()}
-                    onFocus={event => event.stopPropagation()}
-                    control={<Checkbox checked={checked} onClick={handleCheckChange}
-                    />}
-                    label={task.title}
+                <SnackbarContent
+                    className={classes.notibox}
+                    aria-describedby="client-snackbar"
+                    message={
+                        <span id="client-snackbar" className={classes.message}>
+                            Removed from database!
+                        </span>
+                    }
+                    action={[
+                        <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
+                            <CloseIcon className={classes.icon} />
+                        </IconButton>,
+                    ]}
                 />
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-                <ImageAvator alt="Remy Sharp" img="https://filmschoolrejects.com/wp-content/uploads/2017/04/0JRofTsuy93evl_J5.jpg" />
-                <div className={classes.papercustom} borderBottom={0}>
 
-                    <Typography variant="h6" component="h3">
-                        {task.body}
-                    </Typography>
-                    <Typography component="p">
-                        {task.completed ? (<h6>completed: YES</h6>) : (<h6>completed: NO</h6>)}
-                    </Typography>
-                    <Typography component="p">
-                        {(task.visibility.toString() === 'true') ? (<h6>Available to Public</h6>) : (<h6>Not available to Public</h6>)}
-                    </Typography>
-                    <Typography variant="p" component="p">
-                        {moment(task.date, 'x').fromNow()}
-                    </Typography>
+            </Snackbar>
 
-                </div>
-            </ExpansionPanelDetails>
-
-            <ExpansionPanelActions>
-                <Dialog
-                    fullScreen={fullScreen}
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="responsive-dialog-title"
+            <ExpansionPanel className={classes.expand}>
+                <ExpansionPanelSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-label="Expand"
+                    aria-controls="additional-actions1-content"
+                    id="additional-actions1-header"
                 >
-                    <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="id"
-                            name="id"
-                            label="Task ID"
-                            type="text"
-                            onChange={handleChange}
-                            value={values.id}
-                            fullWidth
-                        />
+                    <FormControlLabel
+                        aria-label="Acknowledge"
+                        onClick={event => event.stopPropagation()}
+                        onFocus={event => event.stopPropagation()}
+                        control={<Checkbox checked={checked} onClick={handleCheckChange}
+                        />}
+                        label={task.title}
+                    />
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                    <ImageAvator alt="Remy Sharp" img="https://filmschoolrejects.com/wp-content/uploads/2017/04/0JRofTsuy93evl_J5.jpg" />
+                    <div className={classes.papercustom} borderBottom={0}>
 
-                        <TextField
-                            onChange={handleChange}
-                            value={values.title}
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            name="title"
-                            label="Task Title"
-                            type="text"
-                            fullWidth
-                        />
+                        <Typography variant="h6" component="h3">
+                            {task.body}
+                        </Typography>
+                        <Typography component="p">
+                            {task.completed ? (<h6>completed: YES</h6>) : (<h6>completed: NO</h6>)}
+                        </Typography>
+                        <Typography component="p">
+                            {(task.visibility.toString() === 'true') ? (<h6>Available to Public</h6>) : (<h6>Not available to Public</h6>)}
+                        </Typography>
+                        <Typography variant="p" component="p">
+                            {moment(task.date, 'x').fromNow()}
+                        </Typography>
 
-                        <TextField
-                            autoFocus
-                            onChange={handleChange}
-                            value={values.body}
-                            margin="dense"
-                            id="body"
-                            name="body"
-                            label="Task Description"
-                            type="text"
-                            fullWidth
-                        />
+                    </div>
+                </ExpansionPanelDetails>
 
-                        <TextField
-                            onChange={handleChange}
-                            value={values.completed}
-                            autoFocus
-                            margin="dense"
-                            id="completed"
-                            name="completed"
-                            label="Completed: true/false"
-                            type="text"
-                            fullWidth
-                        />
+                <ExpansionPanelActions>
+                    <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                    >
+                        <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="id"
+                                name="id"
+                                label="Task ID"
+                                type="text"
+                                onChange={handleChange}
+                                value={values.id}
+                                fullWidth
+                            />
 
-                        <TextField
-                            onChange={handleChange}
-                            value={values.visibility}
-                            autoFocus
-                            margin="dense"
-                            id="visibility"
-                            name="visibility"
-                            label="visibility: true/false"
-                            type="text"
-                            fullWidth
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleSubmit} color="primary">
-                            SAVE
-                        </Button>
-                        <Button onClick={handleClose} color="primary" autoFocus>
-                            CANCEL
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    className={classes.button}
-                    startIcon={<SpellcheckIcon />}
-                    onClick={handleClickOpen}
-                >
+                            <TextField
+                                onChange={handleChange}
+                                value={values.title}
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                name="title"
+                                label="Task Title"
+                                type="text"
+                                fullWidth
+                            />
 
-                    Update
-                </Button>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    className={classes.button}
-                    startIcon={<DeleteIcon />}
-                    onClick={handleDelete}
-                >
-                    Delete
+                            <TextField
+                                autoFocus
+                                onChange={handleChange}
+                                value={values.body}
+                                margin="dense"
+                                id="body"
+                                name="body"
+                                label="Task Description"
+                                type="text"
+                                fullWidth
+                            />
+
+                            <TextField
+                                onChange={handleChange}
+                                value={values.completed}
+                                autoFocus
+                                margin="dense"
+                                id="completed"
+                                name="completed"
+                                label="Completed: true/false"
+                                type="text"
+                                fullWidth
+                            />
+
+                            <TextField
+                                onChange={handleChange}
+                                value={values.visibility}
+                                autoFocus
+                                margin="dense"
+                                id="visibility"
+                                name="visibility"
+                                label="visibility: true/false"
+                                type="text"
+                                fullWidth
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button autoFocus onClick={handleSubmit} color="primary">
+                                SAVE
+                   </Button>
+                            <Button onClick={handleClose} color="primary" autoFocus>
+                                CANCEL
+                   </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        className={classes.button}
+                        startIcon={<SpellcheckIcon />}
+                        onClick={handleClickOpen}
+                    >
+
+                        Update
                     </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        className={classes.button}
+                        startIcon={<DeleteIcon />}
+                        onClick={handleDelete}
+                    >
+                        Delete
+               </Button>
 
-            </ExpansionPanelActions>
-        </ExpansionPanel>
+                </ExpansionPanelActions>
+            </ExpansionPanel>
+        </>
 
     );
 }

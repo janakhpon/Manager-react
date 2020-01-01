@@ -13,6 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from 'react-router-dom'
+import PageLoading from '../Loading'
 import { useMutation } from '@apollo/react-hooks';
 import { CREATE_USER } from '../Queries';
 
@@ -47,6 +49,10 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
 
 
@@ -59,8 +65,14 @@ const INITIAL_VALUES = {
 
 const PageSignup = () => {
   const [values, setValues] = React.useState(INITIAL_VALUES)
-  const [createUser] = useMutation(CREATE_USER);
+  const [open, setOpen] = React.useState(false);
+  const [createUser, {loading, data, error}] = useMutation(CREATE_USER);
   const classes = useStyles();
+
+
+  if(loading){
+    return <PageLoading />
+  }
 
 
   const handleChange = (e) => {
@@ -72,15 +84,31 @@ const PageSignup = () => {
 
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     let name = values.name
     let email = values.email
     let phone = values.phone
     let password = values.password
 
-    createUser({ variables: {name, email, phone, password}})
+
+
+    try {
+      const create = await createUser({ variables: { name, email, phone, password } })
+
+      if(create){
+        console.log(create.data)
+
+      }else{
+        console.log()
+      }
+      
+    } catch (err) {
+      
+    }
+
+
 
   }
 
@@ -88,13 +116,16 @@ const PageSignup = () => {
 
   return (
     <Container component="main" maxWidth="xs">
+    {
+      error ? (console.log(error)) : ('')
+    }
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-         CREATE AN ACCOUNT
+          CREATE AN ACCOUNT
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
