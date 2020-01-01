@@ -6,7 +6,6 @@ import PageError from '../Error';
 import PagePrivateTask from '../PrivateTask'
 import PageNoTask from '../Notask'
 
-
 export default function PagePrivateTasks(props) {
   const id = localStorage.getItem('id')
   const getAllTasks = useQuery(GET_RPIVATE_TASKS, {
@@ -15,7 +14,6 @@ export default function PagePrivateTasks(props) {
 
   if (getAllTasks.loading) return <PageLoading />;
   if (getAllTasks.error) return <PageError />;
-  console.log(getAllTasks)
   if (getAllTasks && getAllTasks.data && getAllTasks.data.users.length !== 0) {
     if (getAllTasks.data.users[0].tasks.length === 0) return <PageNoTask />;
   }
