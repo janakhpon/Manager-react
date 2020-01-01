@@ -19,7 +19,7 @@ import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { useMutation } from '@apollo/react-hooks';
-import { UPDATE_TASK } from "../Queries";
+import { UPDATE_TASK, DELTE_TASK } from "../Queries";
 import moment from 'moment'
 import ImageAvator from '../Avator'
 
@@ -52,7 +52,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function PagePrivateTask({ task }) {
     const { id, title, body, completed, visibility, date } = task
-    const [updateTask] = useMutation(UPDATE_TASK);
+    const [updateTask] = useMutation(UPDATE_TASK)
+    const [removeTask] = useMutation(DELTE_TASK)
 
     console.log(id)
     const INITIAL_STATE = {
@@ -110,6 +111,14 @@ export default function PagePrivateTask({ task }) {
 
         setOpen(false);
 
+    }
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+
+        let id = task.id
+
+        removeTask({ variables: { id } })
     }
 
     const handleClickOpen = () => {
@@ -253,6 +262,7 @@ export default function PagePrivateTask({ task }) {
                     size="small"
                     className={classes.button}
                     startIcon={<DeleteIcon />}
+                    onClick={handleDelete}
                 >
                     Delete
                     </Button>

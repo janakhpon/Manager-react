@@ -4,7 +4,6 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
-import DeleteIcon from '@material-ui/icons/Delete';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -180,18 +179,9 @@ export default function PagePublicTask({ task }) {
                     startIcon={<SpellcheckIcon />}
                     onClick={handleClickOpen}
                 >
-
                     View
                 </Button>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    className={classes.button}
-                    startIcon={<DeleteIcon />}
-                >
-                    Delete
-                    </Button>
+
 
             </ExpansionPanelActions>
         </ExpansionPanel>
