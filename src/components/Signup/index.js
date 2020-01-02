@@ -13,8 +13,14 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Backdrop from '@material-ui/core/Backdrop';
+import { amber, green } from '@material-ui/core/colors';
+import CloseIcon from '@material-ui/icons/Close';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import Snackbar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom'
-import PageLoading from '../Loading'
 import { useMutation } from '@apollo/react-hooks';
 import { CREATE_USER } from '../Queries';
 
@@ -37,10 +43,12 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    color: "#ffffff",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+    color: "#ffffff",
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -53,6 +61,33 @@ const useStyles = makeStyles(theme => ({
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
   },
+  notibox: {
+    color: "#ffffff",
+    backgroundColor: "#20bf55",
+  },
+  success: {
+    backgroundColor: green[600],
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark,
+  },
+  info: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  warning: {
+    backgroundColor: amber[700],
+  },
+  icon: {
+    fontSize: 20,
+  },
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing(1),
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }));
 
 
@@ -64,61 +99,90 @@ const INITIAL_VALUES = {
 }
 
 const PageSignup = () => {
+  const history = useHistory()
   const [values, setValues] = React.useState(INITIAL_VALUES)
-  const [open, setOpen] = React.useState(false);
-  const [createUser, {loading, data, error}] = useMutation(CREATE_USER);
+  const [open, setOpen] = React.useState(true);
+  const [createUser, { loading, data, error }] = useMutation(CREATE_USER);
   const classes = useStyles();
 
 
-  if(loading){
-    return <PageLoading />
-  }
+  // if (loading) {
+  //   return <PageLoading />
+  // }
 
 
   const handleChange = (e) => {
-
     e.persist();
     setValues(previousValues => ({
       ...previousValues, [e.target.name]: e.target.value
     }))
-
   }
+
+  const onClose = () => {
+    setOpen(false)
+  }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     let name = values.name
     let email = values.email
     let phone = values.phone
     let password = values.password
-
-
-
     try {
-      const create = await createUser({ variables: { name, email, phone, password } })
-
-      if(create){
-        console.log(create.data)
-
-      }else{
-        console.log()
-      }
-      
+      await createUser({ variables: { name, email, phone, password } })
     } catch (err) {
-      
     }
-
-
-
   }
 
 
 
   return (
     <Container component="main" maxWidth="xs">
-    {
-      error ? (console.log(error)) : ('')
-    }
+      {
+        loading ? (
+          <Backdrop
+            className={classes.backdrop}
+            open={true}
+          >
+            <CircularProgress color="secondary" />
+          </Backdrop>
+        ) : ('')
+      }
+      {
+        error ? (
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            open={open}
+            onClose={onClose}
+            autoHideDuration={2000}
+          >
+            <SnackbarContent
+              className={classes.notibox}
+              aria-describedby="client-snackbar"
+              message={
+                <span id="client-snackbar" className={classes.message}>
+                  {error.graphQLErrors.map(x => x.message)}
+                </span>
+              }
+              action={[
+                <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
+                  <CloseIcon className={classes.icon} />
+                </IconButton>,
+              ]}
+            />
+          </Snackbar>
+        ) : ('')
+      }
+      {
+        data ? (
+          history.push('/Page-signin')
+        ) : ('')
+      }
+
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

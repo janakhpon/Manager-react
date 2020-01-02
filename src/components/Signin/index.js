@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -38,10 +38,12 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    color: "#ffffff",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+    color: "#ffffff",
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -103,7 +105,7 @@ const PageSignin = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LockOpenOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           UNLOCK YOUR ACCOUNT
