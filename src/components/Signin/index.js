@@ -10,14 +10,19 @@ import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Backdrop from '@material-ui/core/Backdrop';
+import { amber, green } from '@material-ui/core/colors';
+import CloseIcon from '@material-ui/icons/Close';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import Snackbar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks';
 import { USER_LOGIN } from '../Queries';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import * as routes from '../../constants/routes'
-
-
 const NavLink = styled(Link)`
     text-decoration: none;
     outline: none;
@@ -30,7 +35,6 @@ const NavLink = styled(Link)`
         color: #0984e3;
     }
 `;
-
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -52,8 +56,38 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+  notibox: {
+    color: "#ffffff",
+    backgroundColor: "#20bf55",
+  },
+  success: {
+    backgroundColor: green[600],
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark,
+  },
+  info: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  warning: {
+    backgroundColor: amber[700],
+  },
+  icon: {
+    fontSize: 20,
+  },
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing(1),
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }));
-
 
 const INITIAL_VALUES = {
   email: "",
@@ -63,12 +97,12 @@ const INITIAL_VALUES = {
 const PageSignin = () => {
   const history = useHistory()
   const [values, setValues] = React.useState(INITIAL_VALUES)
-  const [userLogin] = useMutation(USER_LOGIN);
+  const [open, setOpen] = React.useState(true);
+  const [userLogin, { loading, error }] = useMutation(USER_LOGIN);
   const classes = useStyles();
 
 
   const handleChange = (e) => {
-
     e.persist();
     setValues(previousValues => ({
       ...previousValues, [e.target.name]: e.target.value
@@ -76,14 +110,14 @@ const PageSignin = () => {
 
   }
 
+  const onClose = () => {
+    setOpen(false)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     let email = values.email
     let password = values.password
-
-
-
     try {
       const logg = await userLogin({ variables: { email, password } })
       localStorage.setItem('id', logg.data.userLogin.user.id)
@@ -91,17 +125,50 @@ const PageSignin = () => {
       localStorage.setItem('num', logg.data.userLogin.user.tasks.length)
       history.push('/Page-me')
     } catch (err) {
-
-
+      setOpen(true)
     }
-
-
   }
-
-
 
   return (
     <Container component="main" maxWidth="xs">
+      {
+        loading ? (
+          <Backdrop
+            className={classes.backdrop}
+            open={true}
+          >
+            <CircularProgress color="secondary" />
+          </Backdrop>
+        ) : ('')
+      }
+      {
+        error ? (
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            open={open}
+            onClose={onClose}
+            autoHideDuration={2000}
+          >
+            <SnackbarContent
+              className={classes.notibox}
+              aria-describedby="client-snackbar"
+              message={
+                <span id="client-snackbar" className={classes.message}>
+                  {error.graphQLErrors.map(x => x.message)}
+                </span>
+              }
+              action={[
+                <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
+                  <CloseIcon className={classes.icon} />
+                </IconButton>,
+              ]}
+            />
+          </Snackbar>
+        ) : ('')
+      }
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

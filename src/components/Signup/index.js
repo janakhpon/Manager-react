@@ -90,7 +90,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
 const INITIAL_VALUES = {
   name: "",
   email: "",
@@ -104,13 +103,6 @@ const PageSignup = () => {
   const [open, setOpen] = React.useState(true);
   const [createUser, { loading, data, error }] = useMutation(CREATE_USER);
   const classes = useStyles();
-
-
-  // if (loading) {
-  //   return <PageLoading />
-  // }
-
-
   const handleChange = (e) => {
     e.persist();
     setValues(previousValues => ({
@@ -122,7 +114,6 @@ const PageSignup = () => {
     setOpen(false)
   }
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     let name = values.name
@@ -132,10 +123,9 @@ const PageSignup = () => {
     try {
       await createUser({ variables: { name, email, phone, password } })
     } catch (err) {
+      setOpen(true)
     }
   }
-
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -182,7 +172,6 @@ const PageSignup = () => {
           history.push('/Page-signin')
         ) : ('')
       }
-
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
