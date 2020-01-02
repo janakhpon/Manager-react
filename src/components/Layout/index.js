@@ -160,6 +160,7 @@ const Layout = () => {
                             path={routes.ADMIN}
                             component={() => <PageAdmin />}
                         />
+                       
                     </DCard>
                 </DContainer>
             </Container>

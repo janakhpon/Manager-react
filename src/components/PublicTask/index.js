@@ -13,7 +13,6 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -108,18 +107,7 @@ export default function PagePublicTask({ task }) {
                     onClose={handleClose}
                     aria-labelledby="responsive-dialog-title"
                 >
-                    <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="id"
-                            name="id"
-                            label="Task ID"
-                            type="text"
-                            value={task.id}
-                            fullWidth
-                        />
+                    <DialogContent className={classes.expand}>
 
                         <TextField
                             value={task.title}

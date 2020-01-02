@@ -127,17 +127,15 @@ const INITIAL_STATE = {
 
 const PageNav = ({ session }) => {
   const history = useHistory()
-  const [createTask] = useMutation(CREATE_TASK);
+  const [createTask, { data }] = useMutation(CREATE_TASK);
   const [values, setValues] = React.useState(INITIAL_STATE)
   const [checked, setChecked] = React.useState(false);
   const [open, setOpen] = React.useState(false)
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -160,28 +158,28 @@ const PageNav = ({ session }) => {
 
   const handleCheckChange = (e) => {
     checked ? setChecked(false) : setChecked(true)
-
-
   };
 
   const handleChange = (e) => {
-
     e.persist();
     setValues(previousValues => ({
       ...previousValues, [e.target.name]: e.target.value
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let author = localStorage.getItem('id')
     let title = values.title
     let body = values.body
     let visibility = checked
+    try {
 
+      await createTask({ variables: { title, body, visibility, author } })
 
+    } catch (err) {
 
-    createTask({ variables: { title, body, visibility, author } })
+    }
 
     setOpen(false);
 
@@ -459,16 +457,21 @@ const PageNav = ({ session }) => {
       </AppBar>
       {session.name === null ? renderMobileMenu : renderMobileMenuAuthed}
       {session.name === null ? renderMenu : renderMenuAuthed}
+      {
+        data ? (
+          window.location.reload(false)
+        ) : ('')
+      }
 
       <Dialog
         fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
-        
-        PaperProps ={{
+
+        PaperProps={{
           classes: {
-           root: classes.expand
+            root: classes.expand
           }
         }}
 

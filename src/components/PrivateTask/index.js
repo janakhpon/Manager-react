@@ -236,21 +236,10 @@ export default function PagePrivateTask({ task }) {
                         open={open}
                         onClose={handleClose}
                         aria-labelledby="responsive-dialog-title"
+                       
                     >
-                        <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
-                        <DialogContent>
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                id="id"
-                                name="id"
-                                label="Task ID"
-                                type="text"
-                                onChange={handleChange}
-                                value={values.id}
-                                fullWidth
-                            />
-
+                        <DialogTitle id="responsive-dialog-title">{"Edit Carefully not to be falsely done!"}</DialogTitle>
+                        <DialogContent  className={classes.expand}>
                             <TextField
                                 onChange={handleChange}
                                 value={values.title}
