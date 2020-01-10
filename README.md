@@ -10,15 +10,16 @@
  5.specific user data (data/task/profile/user)
 
 ## Features that is not included yet
- 1. realtime Subscription 
+ 1. account activation using sms/email
  2. aleart box to notify
+ 3. PWA configuration
 
 
 ## RELEASE_STATUS:IN PROGRESS
-## RELEASE_CODE: GDEV023
+## RELEASE_CODE: GDEV036
  Sorry this project is not completely done yet and only a few features are available. If you are considering about cloning this project please wait till it's completed.
 
 ## Description
- If you wanna try it on your own clone the `SERVER-SIDE-REPOSITORY` first then use your own `MONGO_URI` then run `start` or `dev` whatever u like and if it went without errors clone this `CLIENT-SIDE` repo and start the application. I'm sure there will be a few or more errors as this project is completely done for both `CLIENT` and `SERVER`.
+ If you wanna try it on your own then clone the `SERVER-SIDE-REPOSITORY` first then use your own `MONGO_URI` then run `start` or `dev` whatever u like and if it went without errors then clone this `CLIENT-SIDE` repo and start the application. I'm sure there will be a few or more errors as this project is not completely done for both `CLIENT` and `SERVER`. I would appreciate if you fork it on your own acc then tweet as u like!.
     
 
