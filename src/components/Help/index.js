@@ -1,12 +1,14 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import CustomTextField from '../CustomTextField'
+import CustomCheckBox from '../CustomCheckBox'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -29,7 +31,6 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
     color: "#ffffff",
-    backgroundColor: "#003459",
   },
   seperator: {
     color: "#ffffff",
@@ -70,16 +71,16 @@ export default function AddressForm() {
       <CssBaseline />
       <Container maxWidth="md">
         <div className={classes.card} border={0} m={2} p={2}>
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} style={{ background: 'transparent', boxShadow: 'none' }}>
 
             <Typography variant="h2" align='center'>
               Way to get help!
             </Typography>
 
-            <Grid container spacing={1} className={classes.expand}>
+            <Grid container spacing={1} className={classes.expand} style={{ background: 'transparent', boxShadow: 'none' }}>
 
               <Grid item xs={12} spacing={3}>
-                <TextField
+                <CustomTextField
                   id="email"
                   name="email"
                   label="Email here .."
@@ -89,12 +90,18 @@ export default function AddressForm() {
               </Grid>
 
               <Grid item xs={12} spacing={3}>
-                <TextField
+                <CustomTextField
                   id="description"
                   name="description"
                   label="Describe your statement"
                   fullWidth
                   autoComplete="description"
+                />
+              </Grid>
+              <Grid item xs={12} spacing={3}>
+                <FormControlLabel
+                  control={<CustomCheckBox value="remember" color="primary" />}
+                  label="Subscribe to our Newsletter"
                 />
               </Grid>
               <Grid item xs={12} spacing={3}>

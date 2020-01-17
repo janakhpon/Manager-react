@@ -375,7 +375,7 @@ const PageNav = ({ session }) => {
 
   return (
     <div className={classes.container}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
         <Toolbar>
           <IconButton
             edge="start"

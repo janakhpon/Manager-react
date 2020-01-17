@@ -20,6 +20,8 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import Snackbar from '@material-ui/core/Snackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
+import CustomTextField from '../CustomTextField'
+import CustomCheckBox from '../CustomCheckBox'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks';
 import { CREATE_USER } from '../Queries';
@@ -47,8 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-    color: "#ffffff",
+    backgroundColor: '#fff',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -181,7 +182,7 @@ const PageSignup = () => {
           CREATE AN ACCOUNT
         </Typography>
         <form className={classes.form} noValidate>
-          <TextField
+          <CustomTextField
             variant="outlined"
             margin="normal"
             onChange={handleChange}
@@ -193,7 +194,7 @@ const PageSignup = () => {
             autoComplete="name"
             autoFocus
           />
-          <TextField
+          <CustomTextField
             variant="outlined"
             margin="normal"
             onChange={handleChange}
@@ -205,7 +206,7 @@ const PageSignup = () => {
             autoComplete="email"
             autoFocus
           />
-          <TextField
+          <CustomTextField
             variant="outlined"
             margin="normal"
             onChange={handleChange}
@@ -217,7 +218,7 @@ const PageSignup = () => {
             autoComplete="name"
             autoFocus
           />
-          <TextField
+          <CustomTextField
             variant="outlined"
             margin="normal"
             onChange={handleChange}
@@ -230,7 +231,7 @@ const PageSignup = () => {
             autoComplete="current-password"
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<CustomCheckBox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
@@ -243,8 +244,11 @@ const PageSignup = () => {
           >
             SIGN UP
           </Button>
-          <Grid container>
-            <Grid item>
+          <Grid container
+            direction="row"
+            justify="center"
+            alignitems="center">
+            <Grid item xs={6} >
               <NavLink to={routes.SIGN_IN} variant="body2">
                 {"Already have an account? Sign In"}
               </NavLink>
