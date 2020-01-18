@@ -122,7 +122,7 @@ const PageSignin = () => {
       localStorage.setItem('id', logg.data.userLogin.user.id)
       localStorage.setItem('name', logg.data.userLogin.user.name)
       localStorage.setItem('num', logg.data.userLogin.user.tasks.length)
-      history.push('/Page-me')
+      history.push(`${routes.ME}`)
     } catch (err) {
       setOpen(true)
     }

@@ -168,7 +168,7 @@ const PageSignup = () => {
       }
       {
         data ? (
-          history.push('/Page-signin')
+          history.push(`${routes.SIGN_IN}`)
         ) : ('')
       }
       <CssBaseline />
