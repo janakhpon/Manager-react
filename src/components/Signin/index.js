@@ -2,9 +2,7 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -19,6 +17,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks';
+import CustomTextField from '../CustomTextField'
+import CustomCheckBox from '../CustomCheckBox'
 import { USER_LOGIN } from '../Queries';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -46,8 +46,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-    color: "#ffffff",
+    backgroundColor: "#ffffff",
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -179,7 +178,7 @@ const PageSignin = () => {
         </Typography>
         <form className={classes.form} noValidate>
 
-          <TextField
+          <CustomTextField
             variant="outlined"
             margin="normal"
             onChange={handleChange}
@@ -192,7 +191,7 @@ const PageSignin = () => {
             autoFocus
           />
 
-          <TextField
+          <CustomTextField
             variant="outlined"
             margin="normal"
             onChange={handleChange}
@@ -205,7 +204,7 @@ const PageSignin = () => {
             autoComplete="current-password"
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<CustomCheckBox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
@@ -218,8 +217,11 @@ const PageSignin = () => {
           >
             SIGN IN
           </Button>
-          <Grid container>
-            <Grid item alignItems="center">
+          <Grid container
+            direction="row"
+            justify="center"
+            alignitems="center">
+            <Grid item xs={6} >
               <NavLink to={routes.SIGN_UP} variant="body2" alignItems="center">
                 {"Don't have an account? SIGN UP"}
               </NavLink>

@@ -13,6 +13,8 @@ import PagePublicTasks from '../Public'
 import PageUsers from '../Users'
 import PageMe from '../Me'
 import PageAdmin from '../Admin'
+import PageActivate from '../Activate'
+import PageResetPassword from '../ResetPasssword'
 import PageNav from '../Navbar'
 import PageError from '../Error'
 import PageLoading from '../Loading'
@@ -81,7 +83,7 @@ const Layout = () => {
     const id = localStorage.getItem('id')
     const name = localStorage.getItem('name')
     const numoftask = localStorage.getItem('num')
-    
+
 
     const me = {
         id,
@@ -94,8 +96,10 @@ const Layout = () => {
 
     return (
         <>
-            {location.pathname !== '/Page-signup'
-                && location.pathname !== '/Page-signin'
+            {location.pathname !== `${routes.SIGN_UP}`
+                && location.pathname !== `${routes.SIGN_IN}`
+                && location.pathname !== `${routes.ACTIVATE}`
+                && location.pathname !== `${routes.RESETPASSWORD}`
                 && <PageNav session={me} />
             }
             <Container maxWidth="md">
@@ -153,6 +157,16 @@ const Layout = () => {
                         />
                         <Route
                             exact
+                            path={routes.ACTIVATE}
+                            component={() => <PageActivate />}
+                        />
+                        <Route
+                            exact
+                            path={routes.RESETPASSWORD}
+                            component={() => <PageResetPassword />}
+                        />
+                        <Route
+                            exact
                             path={routes.HELP}
                             component={() => <PageHelp />}
                         />
@@ -161,7 +175,6 @@ const Layout = () => {
                             path={routes.ADMIN}
                             component={() => <PageAdmin />}
                         />
-                       
                     </DCard>
                 </DContainer>
             </Container>
