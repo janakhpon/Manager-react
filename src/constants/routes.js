@@ -5,6 +5,7 @@ export const SIGN_IN = '/Page-signin'
 export const ERROR = '/Page-error'
 export const LOADING = '/Page-loading'
 export const ACTIVATE = '/Page-activate'
+export const PREACTIVATE = '/Page-pre-activate'
 export const RESETPASSWORD = '/Page-reset-psw'
 
 //Authed

@@ -18,6 +18,7 @@ import PageResetPassword from '../ResetPasssword'
 import PageNav from '../Navbar'
 import PageError from '../Error'
 import PageLoading from '../Loading'
+import PagePreactivate from '../Preactivate'
 
 
 const DContainer = styled.div`
@@ -99,6 +100,7 @@ const Layout = () => {
             {location.pathname !== `${routes.SIGN_UP}`
                 && location.pathname !== `${routes.SIGN_IN}`
                 && location.pathname !== `${routes.ACTIVATE}`
+                && location.pathname !== `${routes.PREACTIVATE}`
                 && location.pathname !== `${routes.RESETPASSWORD}`
                 && <PageNav session={me} />
             }
@@ -159,6 +161,11 @@ const Layout = () => {
                             exact
                             path={routes.ACTIVATE}
                             component={() => <PageActivate />}
+                        />
+                        <Route
+                            exact
+                            path={routes.PREACTIVATE}
+                            component={() => <PagePreactivate />}
                         />
                         <Route
                             exact
