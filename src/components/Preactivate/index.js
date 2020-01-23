@@ -127,10 +127,10 @@ const PagePreActivate = () => {
         e.preventDefault();
         let email = localStorage.getItem('confirm-email-address')
         let phone = localStorage.getItem('confirm-phone-number')
+        let method = "email"
         try {
-            let logg = await userLogin({ variables: { email, phone, method } })
-            
-            history.push('/Page-me')
+            let logg = await userPreactivate({ variables: { email, phone, method } })
+            history.push(`${routes.PREACTIVATE}`)
         } catch (err) {
             setOpen(true)
         }
@@ -215,7 +215,6 @@ const PagePreActivate = () => {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                onClick={handleSubmit}
                                 className={classes.submit}
                             >
                                 <SmsIcon /> &nbsp; {`  |  `} SMS

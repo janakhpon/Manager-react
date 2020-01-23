@@ -317,13 +317,25 @@ export const DELTE_TASK = gql`
 
 
 export const PPREACTIVATE = gql`
-  mutation User($email: String, $phone: String, $method: String!){
+  mutation User($email: String!, $phone: String!, $method: String!){
     userPreactivate(data: {
       email: $email,
       phone: $phone,
       method: $method
     }){
       name
+    }
+  }
+`
+
+export const ACTIVATE = gql`
+  mutation User($email: String!, $code: String!){
+    userActivate(data: {
+      email: $email,
+      code: $code
+    }){
+      name
+      activated
     }
   }
 `
