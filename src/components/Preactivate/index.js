@@ -103,7 +103,8 @@ const INITIAL_VALUES = {
     password: ""
 }
 
-const PagePreActivate = () => {
+const PagePreActivate = (props) => {
+    console.log(props)
     const history = useHistory()
     const [values, setValues] = React.useState(INITIAL_VALUES)
     const [open, setOpen] = React.useState(true);
@@ -220,7 +221,7 @@ const PagePreActivate = () => {
                                 onClick={handleSubmit}
                                 className={classes.submit}
                             >
-                               <SmsIcon /> &nbsp; {`  |  `} SMS
+                                <SmsIcon /> &nbsp; {`  |  `} SMS
                              </Button>
                         </Grid>
                     </Grid>

@@ -168,7 +168,15 @@ const PageSignup = () => {
       }
       {
         data ? (
-          history.push(`${routes.SIGN_IN}`)
+          history.push(`${routes.PREACTIVATE}`,
+          {
+            state: {
+              name: data.createUser.name,
+              email: data.createUser.email,
+              phone: data.createUser.phone
+            }
+          }
+         )
         ) : ('')
       }
       <CssBaseline />
