@@ -314,3 +314,16 @@ export const DELTE_TASK = gql`
     }
   }
 `
+
+
+export const PPREACTIVATE = gql`
+  mutation User($email: String, $phone: String, $method: String!){
+    userPreactivate(data: {
+      email: $email,
+      phone: $phone,
+      method: $method
+    }){
+      name
+    }
+  }
+`
