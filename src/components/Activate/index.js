@@ -17,7 +17,7 @@ import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks';
 import CustomTextField from '../CustomTextField'
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import { USER_LOGIN } from '../Queries';
+import { ACTIVATE } from '../Queries';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import * as routes from '../../constants/routes'
@@ -98,15 +98,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const INITIAL_VALUES = {
-    email: "",
-    password: ""
+    code: "",
 }
 
 const PageActivate = () => {
     const history = useHistory()
     const [values, setValues] = React.useState(INITIAL_VALUES)
     const [open, setOpen] = React.useState(true);
-    const [userLogin, { loading, error }] = useMutation(USER_LOGIN);
+    const [userActivate, { loading, error }] = useMutation(ACTIVATE);
     const classes = useStyles();
 
 
@@ -124,14 +123,12 @@ const PageActivate = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let email = values.email
-        let password = values.password
+        let email = localStorage.getItem('confirm-email-address')
+        let code = values.code
+
         try {
-            const logg = await userLogin({ variables: { email, password } })
-            localStorage.setItem('id', logg.data.userLogin.user.id)
-            localStorage.setItem('name', logg.data.userLogin.user.name)
-            localStorage.setItem('num', logg.data.userLogin.user.tasks.length)
-            history.push('/Page-me')
+            let logg = await userActivate({ variables: { email, code } })
+            history.push(`${routes.SIGN_IN}`)
         } catch (err) {
             setOpen(true)
         }
@@ -196,6 +193,7 @@ const PageActivate = () => {
                         id="code"
                         label="CODE - XXXXXXX"
                         name="code"
+                        value={values.code}
                         autoComplete="codeunknown"
                         autoFocus
                     />
@@ -210,7 +208,6 @@ const PageActivate = () => {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                onClick={handleSubmit}
                                 className={classes.btn}
                             >
                                 CANCEL
@@ -232,7 +229,7 @@ const PageActivate = () => {
                              </Button>
                         </Grid>
                     </Grid>
-                    
+
                 </form>
             </div>
         </Container>
