@@ -130,7 +130,7 @@ const PagePreActivate = () => {
         let method = "email"
         try {
             let logg = await userPreactivate({ variables: { email, phone, method } })
-            history.push(`${routes.PREACTIVATE}`)
+            history.push(`${routes.ACTIVATE}`)
         } catch (err) {
             setOpen(true)
         }
