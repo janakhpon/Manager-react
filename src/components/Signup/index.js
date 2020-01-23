@@ -168,15 +168,10 @@ const PageSignup = () => {
       }
       {
         data ? (
-          history.push(`${routes.PREACTIVATE}`,
-          {
-            state: {
-              name: data.createUser.name,
-              email: data.createUser.email,
-              phone: data.createUser.phone
-            }
-          }
-         )
+          history.push(`${routes.PREACTIVATE}`
+          ),
+          localStorage.setItem('confirm-email-address', data.createUser.email),
+          localStorage.setItem('confirm-phone-number', data.createUser.phone)
         ) : ('')
       }
       <CssBaseline />
