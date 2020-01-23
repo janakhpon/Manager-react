@@ -18,7 +18,7 @@ import { useMutation } from '@apollo/react-hooks';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import EmailIcon from '@material-ui/icons/Email';
 import SmsIcon from '@material-ui/icons/Sms';
-import { USER_LOGIN } from '../Queries';
+import { PPREACTIVATE } from '../Queries';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import * as routes from '../../constants/routes'
@@ -103,12 +103,11 @@ const INITIAL_VALUES = {
     password: ""
 }
 
-const PagePreActivate = (props) => {
-    console.log(props)
+const PagePreActivate = () => {
     const history = useHistory()
     const [values, setValues] = React.useState(INITIAL_VALUES)
     const [open, setOpen] = React.useState(true);
-    const [userLogin, { loading, error }] = useMutation(USER_LOGIN);
+    const [userPreactivate, { loading, error }] = useMutation(PPREACTIVATE);
     const classes = useStyles();
 
 
@@ -126,13 +125,11 @@ const PagePreActivate = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let email = values.email
-        let password = values.password
+        let email = localStorage.getItem('confirm-email-address')
+        let phone = localStorage.getItem('confirm-phone-number')
         try {
-            const logg = await userLogin({ variables: { email, password } })
-            localStorage.setItem('id', logg.data.userLogin.user.id)
-            localStorage.setItem('name', logg.data.userLogin.user.name)
-            localStorage.setItem('num', logg.data.userLogin.user.tasks.length)
+            let logg = await userLogin({ variables: { email, phone, method } })
+            
             history.push('/Page-me')
         } catch (err) {
             setOpen(true)
