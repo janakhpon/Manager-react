@@ -384,7 +384,7 @@ const PageNav = ({ session }) => {
             aria-label="open drawer"
           >
             <NavLink to={routes.LANDING}>
-              <MenuIcon />
+              <MenuIcon style={{fill: "#65C43C"}} />
             </NavLink>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
@@ -392,7 +392,7 @@ const PageNav = ({ session }) => {
     </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+              <SearchIcon style={{fill: "#65C43C"}} />
             </div>
             <InputBase
               placeholder="Search…"
@@ -415,7 +415,7 @@ const PageNav = ({ session }) => {
                   onClick={handleProfileMenuOpen}
                   color="inherit"
                 >
-                  <AccountCircle />
+                  <AccountCircle style={{fill: "#65C43C"}}/>
                 </IconButton>
               </>
             ) : (
@@ -436,7 +436,7 @@ const PageNav = ({ session }) => {
                     onClick={handleProfileMenuOpen}
                     color="inherit"
                   >
-                    <AccountCircle />
+                    <AccountCircle style={{fill: "#65C43C"}}/>
                   </IconButton>
                 </>
               )
