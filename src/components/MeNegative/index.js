@@ -15,7 +15,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
+import CustomTextField from '../CustomTextField'
 import AddIcon from '@material-ui/icons/Add';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -27,16 +27,13 @@ import { format } from 'date-fns'
 import PageLoading from '../Loading'
 import PageError from '../Error'
 
-
-
-
 const useStyles = makeStyles(theme => ({
     card: {
         maxWidth: 800,
         textAlign: "center",
         overflow: "hidden",
         color: "#ffffff",
-        backgroundColor: "#003459",
+        backgroundColor: "transparent",
     },
     bigAvatar: {
         width: 200,
@@ -60,7 +57,13 @@ const useStyles = makeStyles(theme => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
+    expand: {
+        color: "#ffffff",
+        backgroundColor: "#003459",
+        overflowX: "hidden",
+    }
 }));
+
 const INIT_STATE = {
     address: "",
     info: "",
@@ -163,11 +166,16 @@ export default function PgenderMeNegative() {
                     open={open}
                     onClose={handleClose}
                     aria-labelledby="responsive-dialog-title"
+                    PaperProps={{
+                        classes: {
+                            root: classes.expand
+                        }
+                    }}
                 >
                     <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
                     <DialogContent>
 
-                        <TextField
+                        <CustomTextField
                             onChange={handleChange}
                             value={values.address}
                             autoFocus
@@ -179,7 +187,7 @@ export default function PgenderMeNegative() {
                             fullWidth
                         />
 
-                        <TextField
+                        <CustomTextField
                             onChange={handleChange}
                             value={values.info}
                             autoFocus
@@ -208,7 +216,7 @@ export default function PgenderMeNegative() {
                             </Select>
                         </FormControl>
 
-                        <TextField
+                        <CustomTextField
                             onChange={handleChange}
                             value={values.avatar}
                             autoFocus
@@ -220,7 +228,7 @@ export default function PgenderMeNegative() {
                             fullWidth
                         />
 
-                        <TextField
+                        <CustomTextField
                             onChange={handleChange}
                             value={values.school}
                             autoFocus
@@ -232,7 +240,7 @@ export default function PgenderMeNegative() {
                             fullWidth
                         />
 
-                        <TextField
+                        <CustomTextField
                             onChange={handleChange}
                             value={values.career}
                             autoFocus
@@ -245,7 +253,7 @@ export default function PgenderMeNegative() {
                         />
 
 
-                        <TextField
+                        <CustomTextField
                             onChange={handleChange}
                             value={values.hobby}
                             autoFocus

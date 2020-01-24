@@ -6,15 +6,15 @@ const styles = {
     underline: {
         // normal style
         "&::before": {
-            borderBottom: "4px solid green"
+            borderBottom: "1px solid #06D648"
         },
         // hover style
         "&:hover:not(.Mui-disabled):before": {
-            borderBottom: "4px solid blue"
+            borderBottom: "2px solid #DFEF4C"
         },
         // focus style
         "&::after": {
-            borderBottom: "4px solid red"
+            borderBottom: "3px solid red"
         },
 
         background: 'transparent',
