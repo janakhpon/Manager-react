@@ -20,7 +20,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
+import CustomTextField from '../CustomTextField'
+import CustomCheckBox from '../CustomCheckBox'
 import styled from 'styled-components'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -29,8 +30,6 @@ import { CREATE_TASK } from "../Queries";
 import { Link, useHistory } from 'react-router-dom'
 import * as routes from '../../constants/routes'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-
 const NavLink = styled(Link)`
     text-decoration: none;
     text-align: center;
@@ -116,7 +115,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 const INITIAL_STATE = {
   title: "",
   body: "",
@@ -174,17 +172,11 @@ const PageNav = ({ session }) => {
     let body = values.body
     let visibility = checked
     try {
-
       await createTask({ variables: { title, body, visibility, author } })
-
     } catch (err) {
-
     }
-
     setOpen(false);
-
   }
-
   const lockMeOut = (e) => {
     localStorage.clear();
     history.push('/Page-signin')
@@ -255,7 +247,7 @@ const PageNav = ({ session }) => {
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
         <NavLink to={routes.PUBLICTASKS}>
           Public Tasks
-    </NavLink>
+      </NavLink>
       </MenuItem>
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
         <NavLink to={routes.USERS}>
@@ -265,7 +257,7 @@ const PageNav = ({ session }) => {
       <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
         <NavLink to={routes.HELP}>
           HELP ME
-    </NavLink>
+      </NavLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <Button
@@ -300,11 +292,11 @@ const PageNav = ({ session }) => {
       <MenuItem onClick={handleMenuClose}>
         <NavLink to={routes.SIGN_UP}>
           SIGN UP
-    </NavLink></MenuItem>
+      </NavLink></MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <NavLink to={routes.SIGN_IN}>
           SIGN IN
-    </NavLink>
+      </NavLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <NavLink to={routes.HELP}>
@@ -335,17 +327,17 @@ const PageNav = ({ session }) => {
       <MenuItem>
         <NavLink to={routes.PRIVATETASKS}>
           Private Tasks
-  </NavLink>
+        </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to={routes.PUBLICTASKS}>
           Public Tasks
-</NavLink>
+        </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to={routes.USERS}>
           List Users
-  </NavLink>
+        </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to={routes.HELP}>
@@ -372,7 +364,6 @@ const PageNav = ({ session }) => {
     </Menu>
   );
 
-
   return (
     <div className={classes.container}>
       <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
@@ -384,18 +375,18 @@ const PageNav = ({ session }) => {
             aria-label="open drawer"
           >
             <NavLink to={routes.LANDING}>
-              <MenuIcon style={{fill: "#65C43C"}} />
+              <MenuIcon style={{ fill: "#65C43C" }} />
             </NavLink>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Manager
-    </Typography>
+          </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon style={{fill: "#65C43C"}} />
+              <SearchIcon style={{ fill: "#65C43C" }} />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Search for Tasks ..."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -415,7 +406,7 @@ const PageNav = ({ session }) => {
                   onClick={handleProfileMenuOpen}
                   color="inherit"
                 >
-                  <AccountCircle style={{fill: "#65C43C"}}/>
+                  <AccountCircle style={{ fill: "#65C43C" }} />
                 </IconButton>
               </>
             ) : (
@@ -436,7 +427,7 @@ const PageNav = ({ session }) => {
                     onClick={handleProfileMenuOpen}
                     color="inherit"
                   >
-                    <AccountCircle style={{fill: "#65C43C"}}/>
+                    <AccountCircle style={{ fill: "#65C43C" }} />
                   </IconButton>
                 </>
               )
@@ -462,24 +453,20 @@ const PageNav = ({ session }) => {
           window.location.reload(false)
         ) : ('')
       }
-
       <Dialog
         fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
-
         PaperProps={{
           classes: {
             root: classes.expand
           }
         }}
-
       >
         <DialogTitle id="responsive-dialog-title">{" Don't Forget to choose your privacy options!"}</DialogTitle>
         <DialogContent>
-
-          <TextField
+          <CustomTextField
             onChange={handleChange}
             value={values.title}
             autoFocus
@@ -490,8 +477,7 @@ const PageNav = ({ session }) => {
             type="text"
             fullWidth
           />
-
-          <TextField
+          <CustomTextField
             autoFocus
             onChange={handleChange}
             value={values.body}
@@ -502,11 +488,9 @@ const PageNav = ({ session }) => {
             type="text"
             fullWidth
           />
-
-
           <FormControlLabel
             control={
-              <Checkbox
+              <CustomCheckBox
                 checked={checked} onClick={handleCheckChange}
               />
             }
