@@ -102,6 +102,7 @@ const Layout = () => {
                 && location.pathname !== `${routes.SIGN_IN}`
                 && location.pathname !== `${routes.ACTIVATE}`
                 && location.pathname !== `${routes.PREACTIVATE}`
+                && location.pathname !== `${routes.PRERESETPASSWORD}`
                 && location.pathname !== `${routes.RESETPASSWORD}`
                 && <PageNav session={me} />
             }
