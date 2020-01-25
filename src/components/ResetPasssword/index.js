@@ -17,7 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CustomTextField from '../CustomTextField'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks';
-import { CREATE_USER } from '../Queries';
+import { RESETPASSWORD } from '../Queries';
 
 
 const useStyles = makeStyles(theme => ({
@@ -84,9 +84,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const INITIAL_VALUES = {
-    name: "",
+    code: "",
     email: "",
-    phone: "",
     password: ""
 }
 
@@ -99,7 +98,7 @@ const PageResetPassword = () => {
     const [values, setValues] = React.useState(INITIAL_VALUES)
     const [btnclass, setBtnclass] = React.useState(INIT_VALUES)
     const [open, setOpen] = React.useState(true);
-    const [createUser, { loading, data, error }] = useMutation(CREATE_USER);
+    const [userResetPassword, { loading, data, error }] = useMutation(RESETPASSWORD);
     const classes = useStyles();
     const handleChange = (e) => {
         e.persist();
@@ -114,12 +113,12 @@ const PageResetPassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let name = values.name
-        let email = values.email
-        let phone = values.phone
+        let email = localStorage.getItem('email-psw-reset')
+        let code = values.code
         let password = values.password
         try {
-            await createUser({ variables: { name, email, phone, password } })
+            let logg = await userResetPassword({ variables: { email, code, password } })
+            console.log(logg)
         } catch (err) {
             setOpen(true)
         }
@@ -190,11 +189,12 @@ const PageResetPassword = () => {
                         variant="outlined"
                         margin="normal"
                         onChange={handleChange}
+                        value={values.code}
                         required
                         fullWidth
                         id="activatecode"
                         label="CODE - XXXXXXX"
-                        name="activatecode"
+                        name="code"
                         autoComplete="activatecode"
                         autoFocus
                     />
