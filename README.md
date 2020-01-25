@@ -1,4 +1,4 @@
-# Manager-React
+# ManagerClient
   Manager-React is a task management application written in React with the Help of Graphql Server on Backend. Notice that CRUD options are available to admin only. Please Check the `RELEASE_STATUS` before you clone. Here is a deployed link [DeploymentLink](https://todogql-react.now.sh)
 
 
