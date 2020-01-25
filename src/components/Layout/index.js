@@ -14,6 +14,7 @@ import PageUsers from '../Users'
 import PageMe from '../Me'
 import PageAdmin from '../Admin'
 import PageActivate from '../Activate'
+import PagePreResetPassword from '../PreResetPassword'
 import PageResetPassword from '../ResetPasssword'
 import PageNav from '../Navbar'
 import PageError from '../Error'
@@ -166,6 +167,11 @@ const Layout = () => {
                             exact
                             path={routes.PREACTIVATE}
                             component={() => <PagePreactivate />}
+                        />
+                        <Route
+                            exact
+                            path={routes.PRERESETPASSWORD}
+                            component={() => <PagePreResetPassword />}
                         />
                         <Route
                             exact
