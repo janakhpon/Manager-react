@@ -6,6 +6,7 @@ export const ERROR = '/Page-error'
 export const LOADING = '/Page-loading'
 export const ACTIVATE = '/Page-activate'
 export const PREACTIVATE = '/Page-pre-activate'
+export const PRERESETPASSWORD = '/Page-pre-reset-psw'
 export const RESETPASSWORD = '/Page-reset-psw'
 
 //Authed
