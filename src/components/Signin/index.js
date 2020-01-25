@@ -218,12 +218,15 @@ const PageSignin = () => {
             SIGN IN
           </Button>
           <Grid container
-            direction="row"
-            justify="center"
-            alignitems="center">
+            direction="row">
+            <Grid item xs={6}>
+              <NavLink to={routes.SIGN_UP} variant="body2" alignitems="center" style={{ display: 'block', textAlign: 'center', alignSelf: 'stretch' }}>
+                {"New User? SIGN UP"}
+              </NavLink>
+            </Grid>
             <Grid item xs={6} >
-              <NavLink to={routes.SIGN_UP} variant="body2" alignItems="center">
-                {"Don't have an account? SIGN UP"}
+              <NavLink to={routes.PRERESETPASSWORD} variant="body2" alignitems="center" style={{ display: 'block', textAlign: 'center', alignSelf: 'stretch' }}>
+                {"Forgot Password?"}
               </NavLink>
             </Grid>
           </Grid>
