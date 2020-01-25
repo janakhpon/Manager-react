@@ -1,25 +1,19 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
-import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Backdrop from '@material-ui/core/Backdrop';
-import { amber, green } from '@material-ui/core/colors';
-import CloseIcon from '@material-ui/icons/Close';
+import Container from '@material-ui/core/Container'
+import Backdrop from '@material-ui/core/Backdrop'
+import { amber, green } from '@material-ui/core/colors'
+import CloseIcon from '@material-ui/icons/Close'
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import Snackbar from '@material-ui/core/Snackbar';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress'
+import IconButton from '@material-ui/core/IconButton'
 import { useHistory } from 'react-router-dom'
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks'
 import CustomTextField from '../CustomTextField'
-import CustomCheckBox from '../CustomCheckBox'
-import { USER_LOGIN } from '../Queries';
+import { PRERESETPASSWORD } from '../Queries'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import * as routes from '../../constants/routes'
@@ -90,14 +84,15 @@ const useStyles = makeStyles(theme => ({
 
 const INITIAL_VALUES = {
     email: "",
-    phone: ""
+    phone: "",
+    method: ""
 }
 
 const PagePreResetphone = () => {
     const history = useHistory()
     const [values, setValues] = React.useState(INITIAL_VALUES)
     const [open, setOpen] = React.useState(true);
-    const [userLogin, { loading, error }] = useMutation(USER_LOGIN);
+    const [userPreResetPassword, { loading, error }] = useMutation(PRERESETPASSWORD);
     const classes = useStyles();
 
 
@@ -117,12 +112,11 @@ const PagePreResetphone = () => {
         e.preventDefault();
         let email = values.email
         let phone = values.phone
+        let method = "email"
         try {
-            const logg = await userLogin({ variables: { email, phone } })
-            localStorage.setItem('id', logg.data.userLogin.user.id)
-            localStorage.setItem('name', logg.data.userLogin.user.name)
-            localStorage.setItem('num', logg.data.userLogin.user.tasks.length)
-            history.push(`${routes.ME}`)
+            const logg = await userPreResetPassword({ variables: { email, phone, method } })
+            localStorage.setItem('email-psw-reset', logg.data.userPreResetPassword.email)
+            history.push(`${routes.RESETPASSWORD}`)
         } catch (err) {
             setOpen(true)
         }
@@ -216,7 +210,6 @@ const PagePreResetphone = () => {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        onClick={handleSubmit}
                         className={classes.submit}
                     >
                         SMS CONFIRM
