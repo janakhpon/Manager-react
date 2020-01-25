@@ -352,3 +352,16 @@ export const PRERESETPASSWORD = gql`
    }
 }
 `
+
+
+export const RESETPASSWORD = gql`
+  mutation User($email: String!, $code: String!, $password: String!){
+    userResetPassword(data: {
+      email: $email,
+      code: $code,
+      password: $password
+    }){
+      email
+   }
+}
+`
