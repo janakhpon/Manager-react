@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: "#d50000"
         },
     },
-    hr:{
+    hr: {
         marginBottom: '1.5rem',
     }
 }));
@@ -208,46 +208,6 @@ const PageSetting = () => {
                         label="Antoine Llorca"
                     />
 
-                    <hr className={classes.hr}/>
-
-                    <Typography component="h1" variant="h5">
-                        Account
-                    </Typography>
-
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        className={classes.submit}
-                    >
-                        UPDATE PASSWORD
-                        </Button>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        className={classes.submit}
-                    >
-                        UPDATE PASSWORD
-                        </Button>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        className={classes.submit}
-                    >
-                        UPDATE PASSWORD
-                        </Button>
-
                     <hr className={classes.hr} />
 
                     <Typography component="h1" variant="h5">
@@ -263,7 +223,7 @@ const PageSetting = () => {
                         onClick={handleSubmit}
                         className={classes.submit}
                     >
-                        UPDATE PASSWORD
+                        RESET PROFILE
                         </Button>
 
                     <Button
@@ -274,7 +234,7 @@ const PageSetting = () => {
                         onClick={handleSubmit}
                         className={classes.submit}
                     >
-                        UPDATE PASSWORD
+                        REMOVE ACCOUNT
                         </Button>
 
                     <Button
@@ -285,8 +245,37 @@ const PageSetting = () => {
                         onClick={handleSubmit}
                         className={classes.submit}
                     >
-                        UPDATE PASSWORD
+                        RESET ACCOUNT
                         </Button>
+
+                    <hr className={classes.hr} />
+
+                    <Typography component="h1" variant="h5">
+                        YOUR TASKS
+                    </Typography>
+
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.submit}
+                    >
+                        Make Private
+                        </Button>
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.submit}
+                    >
+                        Reset Tasks
+                    </Button>
 
                 </form>
             </div>
