@@ -8,12 +8,14 @@
  3.update(user/task/profile)
  4.delete(user/task/profile)
  5.specific user data (data/task/profile/user)
+ 6. email confirmation (nodemailer)
 
 ## Features that is not included yet
  1. account activation using sms/email
  2. aleart box to notify
  3. PWA configuration
  4. Setting
+ 5. sms confirmation
 
 
 ## RELEASE_STATUS:IN PROGRESS
