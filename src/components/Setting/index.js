@@ -87,6 +87,9 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: "#d50000"
         },
     },
+    hr:{
+        marginBottom: '1.5rem',
+    }
 }));
 
 const INITIAL_VALUES = {
@@ -205,7 +208,7 @@ const PageSetting = () => {
                         label="Antoine Llorca"
                     />
 
-                    <hr />
+                    <hr className={classes.hr}/>
 
                     <Typography component="h1" variant="h5">
                         Account
@@ -245,7 +248,7 @@ const PageSetting = () => {
                         UPDATE PASSWORD
                         </Button>
 
-                    <hr />
+                    <hr className={classes.hr} />
 
                     <Typography component="h1" variant="h5">
                         Account
