@@ -14,6 +14,12 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import Snackbar from '@material-ui/core/Snackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Switch from '@material-ui/core/Switch';
 import CustomTextField from '../CustomTextField'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks';
@@ -90,7 +96,8 @@ const INITIAL_VALUES = {
 }
 
 const INIT_VALUES = {
-    display: false
+    display: false,
+    theme: false
 }
 
 const PageSetting = () => {
@@ -185,89 +192,98 @@ const PageSetting = () => {
                     RESET PASSWORD
                 </Typography>
                 <form className={classes.form} noValidate>
-                    <CustomTextField
-                        variant="outlined"
-                        margin="normal"
-                        onChange={handleChange}
-                        value={values.code}
-                        required
-                        fullWidth
-                        id="activatecode"
-                        label="CODE - XXXXXXX"
-                        name="code"
-                        autoComplete="activatecode"
-                        autoFocus
+
+                    <Typography component="h1" variant="h5">
+                        Display
+                    </Typography>
+
+
+                    <FormControlLabel
+                        control={
+                            <Switch checked={values.theme} onChange={handleChange} value="antoine" />
+                        }
+                        label="Antoine Llorca"
                     />
-                    <Grid container
-                        direction="row"
-                        justify="center"
-                        alignitems="center">
-                        <Grid item xs={5} >
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                onClick={handleSubmit}
-                                className={classes.btn}
-                            >
-                                CANCEL
-                            </Button>
-                        </Grid>
-                        <Grid item xs={2} >
-                            {' '}
-                        </Grid>
-                        <Grid item xs={5} >
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                onClick={handleConfirm}
-                                className={classes.submit}
-                            >
-                                CONFIRM
-                     </Button>
-                        </Grid>
-                    </Grid>
-                    <CustomTextField
-                        variant="outlined"
-                        margin="normal"
-                        onChange={handleChange}
-                        required
+
+                    <hr />
+
+                    <Typography component="h1" variant="h5">
+                        Account
+                    </Typography>
+
+
+                    <Button
+                        type="submit"
                         fullWidth
-                        name="password"
-                        label="New Password"
-                        type="password"
-                        id="password"
-                        autoComplete="new-password"
-                    />
-                    <CustomTextField
-                        variant="outlined"
-                        margin="normal"
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        name="cpassword"
-                        label="Confirm Password"
-                        type="password"
-                        id="cpassword"
-                        autoComplete="confirm-password"
-                    />
-                    {
-                        btnclass.display ? (<>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                onClick={handleSubmit}
-                                className={classes.submit}
-                            >
-                                UPDATE PASSWORD
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.submit}
+                    >
+                        UPDATE PASSWORD
                         </Button>
-                        </>) : (<></>)
-                    }
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.submit}
+                    >
+                        UPDATE PASSWORD
+                        </Button>
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.submit}
+                    >
+                        UPDATE PASSWORD
+                        </Button>
+
+                    <hr />
+
+                    <Typography component="h1" variant="h5">
+                        Account
+                    </Typography>
+
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.submit}
+                    >
+                        UPDATE PASSWORD
+                        </Button>
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.submit}
+                    >
+                        UPDATE PASSWORD
+                        </Button>
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.submit}
+                    >
+                        UPDATE PASSWORD
+                        </Button>
 
                 </form>
             </div>
