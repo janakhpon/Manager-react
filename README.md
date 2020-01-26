@@ -3,12 +3,13 @@
 
 
 ## Included Features
- 1.create(user/task/profile)
- 2.get(user/task/profile)
- 3.update(user/task/profile)
- 4.delete(user/task/profile)
- 5.specific user data (data/task/profile/user)
+ 1. create(user/task/profile)
+ 2. get(user/task/profile)
+ 3. update(user/task/profile)
+ 4. delete(user/task/profile)
+ 5. specific user data (data/task/profile/user)
  6. email confirmation (nodemailer)
+ 7. password reset
 
 ## Features that is not included yet
  1. account activation using sms/email
@@ -16,6 +17,10 @@
  3. PWA configuration
  4. Setting
  5. sms confirmation
+ 6. Oauth using Facebook
+ 7. Oauth using Twitter
+ 8. Location storage
+ 9. mulilanguage options
 
 
 ## RELEASE_STATUS:IN PROGRESS
