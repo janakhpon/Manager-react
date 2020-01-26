@@ -13,6 +13,7 @@
  1. account activation using sms/email
  2. aleart box to notify
  3. PWA configuration
+ 4. Setting
 
 
 ## RELEASE_STATUS:IN PROGRESS
