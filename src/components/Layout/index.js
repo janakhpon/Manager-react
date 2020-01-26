@@ -20,6 +20,7 @@ import PageNav from '../Navbar'
 import PageError from '../Error'
 import PageLoading from '../Loading'
 import PagePreactivate from '../Preactivate'
+import PageSetting from '../Setting'
 
 
 const DContainer = styled.div`
@@ -104,6 +105,7 @@ const Layout = () => {
                 && location.pathname !== `${routes.PREACTIVATE}`
                 && location.pathname !== `${routes.PRERESETPASSWORD}`
                 && location.pathname !== `${routes.RESETPASSWORD}`
+                && location.pathname !== `${routes.SETTING}`
                 && <PageNav session={me} />
             }
             <Container maxWidth="md">
@@ -148,6 +150,11 @@ const Layout = () => {
                             exact
                             path={routes.USERS}
                             component={() => <PageUsers />}
+                        />
+                        <Route
+                            exact
+                            path={routes.SETTING}
+                            component={() => <PageSetting />}
                         />
                         <Route
                             exact
