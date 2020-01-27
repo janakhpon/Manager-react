@@ -20,6 +20,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Switch from '@material-ui/core/Switch';
+import SettingsIcon from '@material-ui/icons/Settings';
 import CustomTextField from '../CustomTextField'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks';
@@ -87,7 +88,7 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: "#d50000"
         },
     },
-    hr:{
+    hr: {
         marginBottom: '1.5rem',
     }
 }));
@@ -189,7 +190,7 @@ const PageSetting = () => {
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <ClearAllIcon />
+                    <SettingsIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     RESET PASSWORD
@@ -205,48 +206,8 @@ const PageSetting = () => {
                         control={
                             <Switch checked={values.theme} onChange={handleChange} value="antoine" />
                         }
-                        label="Antoine Llorca"
+                        label="Night Mode"
                     />
-
-                    <hr className={classes.hr}/>
-
-                    <Typography component="h1" variant="h5">
-                        Account
-                    </Typography>
-
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        className={classes.submit}
-                    >
-                        UPDATE PASSWORD
-                        </Button>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        className={classes.submit}
-                    >
-                        UPDATE PASSWORD
-                        </Button>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        className={classes.submit}
-                    >
-                        UPDATE PASSWORD
-                        </Button>
 
                     <hr className={classes.hr} />
 
@@ -261,10 +222,39 @@ const PageSetting = () => {
                         variant="contained"
                         color="primary"
                         onClick={handleSubmit}
-                        className={classes.submit}
+                        className={classes.btn}
                     >
-                        UPDATE PASSWORD
+                        RESET PROFILE
                         </Button>
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.btn}
+                    >
+                        REMOVE ACCOUNT
+                        </Button>
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        className={classes.btn}
+                    >
+                        RESET ACCOUNT
+                        </Button>
+
+                    <hr className={classes.hr} />
+
+                    <Typography component="h1" variant="h5">
+                        YOUR TASKS
+                    </Typography>
+
 
                     <Button
                         type="submit"
@@ -274,7 +264,7 @@ const PageSetting = () => {
                         onClick={handleSubmit}
                         className={classes.submit}
                     >
-                        UPDATE PASSWORD
+                        Make Private
                         </Button>
 
                     <Button
@@ -283,10 +273,10 @@ const PageSetting = () => {
                         variant="contained"
                         color="primary"
                         onClick={handleSubmit}
-                        className={classes.submit}
+                        className={classes.btn}
                     >
-                        UPDATE PASSWORD
-                        </Button>
+                        Reset Tasks
+                    </Button>
 
                 </form>
             </div>
